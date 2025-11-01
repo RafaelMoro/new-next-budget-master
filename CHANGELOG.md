@@ -1,3 +1,9 @@
+## v0.5.0 (2025-11-01)
+
+### Pull Requests
+[#4](https://github.com/RafaelMoro/new-next-budget-master/pull/4) | Add config for unit testing
+
+
 ## v0.4.0 (2025-11-01)
 
 ### Pull Requests
