@@ -1,3 +1,9 @@
+## v0.4.0 (2025-11-01)
+
+### Pull Requests
+[#3](https://github.com/RafaelMoro/new-next-budget-master/pull/3) | Add Flowbite
+
+
 ## v0.3.0 (2025-11-01)
 
 ### Pull Requests
