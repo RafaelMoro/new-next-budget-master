@@ -1,3 +1,9 @@
+## v0.6.0 (2025-11-01)
+
+### Pull Requests
+[#5](https://github.com/RafaelMoro/new-next-budget-master/pull/5) | Add Tremor
+
+
 ## v0.5.0 (2025-11-01)
 
 ### Pull Requests
