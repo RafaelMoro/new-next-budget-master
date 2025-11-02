@@ -6,3 +6,18 @@ export type ErrorCatched = {
     code: string
   }
 }
+
+export type CookieObject = {
+  name: string;
+  value: string;
+};
+
+export type GeneralError = {
+  response: {
+    data: {
+      error: {
+        message: string;
+      }
+    }
+  }
+}
