@@ -8,7 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Toaster, toast } from 'sonner'
 
-import { LoginData, LoginError, LoginFormValues, LoginSchema } from "@/shared/types/login.types"
+import { LoginData, LoginFormValues, LoginSchema } from "@/shared/types/login.types"
 import { ErrorMessage } from "@/shared/ui/atoms/ErrorMessage"
 import { DASHBOARD_ROUTE, FORGOT_PASSWORD_ROUTE, GENERAL_ERROR_MESSAGE, REGISTER_ROUTE } from "@/shared/constants/global.constants";
 import { LinkButton } from "@/shared/ui/atoms/LinkButton";
@@ -16,6 +16,7 @@ import { useMutation } from "@tanstack/react-query";
 import { LoginMutationCb } from "@/shared/utils/login.utils";
 import { CheckIcon } from "@/shared/ui/icons/CheckIcon";
 import { ERROR_UNAUTHORIZED_LOGIN_BE_RES, ERROR_UNAUTHORIZED_LOGIN_MESSAGE } from "@/shared/constants/login.constants";
+import { GeneralApiError } from "@/shared/types/global.types";
 
 export const LoginCard = () => {
   const router = useRouter()
@@ -28,7 +29,7 @@ export const LoginCard = () => {
     resolver: yupResolver(LoginSchema)
   })
 
-  const { mutate: loginMutation, isError, isPending, isSuccess, isIdle, error } = useMutation<LoginData, LoginError, LoginFormValues>({
+  const { mutate: loginMutation, isError, isPending, isSuccess, isIdle, error } = useMutation<LoginData, GeneralApiError, LoginFormValues>({
     mutationFn: LoginMutationCb,
     onSuccess: () => {
       setTimeout(() => {

@@ -4,6 +4,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { getCookieProps } from "@/shared/utils/login.utils";
 import { encodeAccessToken, saveSessionCookie } from "@/shared/lib/auth.lib";
 import { GeneralError } from "@/shared/types/global.types";
+import { SESSION_COOKIE_KEY } from "@/shared/constants/global.constants";
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest) {
       await saveSessionCookie(session)
       
       const response = NextResponse.json({ data: res.data }, { status: 201 })
-      response.cookies.set('session', session, {
+      response.cookies.set(SESSION_COOKIE_KEY, session, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         path: '/',
