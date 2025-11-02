@@ -1,11 +1,14 @@
 "use client"
-import { Card, Label, TextInput } from "flowbite-react"
+import Link from "next/link";
+import { Button, Card, Label, TextInput } from "flowbite-react"
 import { AnimatePresence } from "motion/react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 
 import { LoginFormValues, LoginSchema } from "@/shared/types/login.types"
 import { ErrorMessage } from "@/shared/ui/atoms/ErrorMessage"
+import { FORGOT_PASSWORD_ROUTE, REGISTER_ROUTE } from "@/shared/constants/global.constants";
+import { LinkButton } from "@/shared/ui/atoms/LinkButton";
 
 export const LoginCard = () => {
   const {
@@ -61,6 +64,20 @@ export const LoginCard = () => {
               <ErrorMessage isAnimated>{errors.password?.message}</ErrorMessage>
             )}
           </div>
+          <Link className="underline" href={FORGOT_PASSWORD_ROUTE}>¿Olvidaste tu contraseña?</Link>
+          <LinkButton type="secondary" href={REGISTER_ROUTE} >
+            Registrarse
+          </LinkButton>
+          <Button
+            className="hover:cursor-pointer"
+            // disabled={isPending || isSuccess}
+            type="submit"
+          >
+            Iniciar sesión
+            {/* { (isIdle || isError) && 'Iniciar sesión'}
+            { isPending && (<Spinner aria-label="loading login budget master" />) }
+            { isSuccess && (<CheckIcon />)} */}
+          </Button>
         </form>
       </Card>
     </AnimatePresence>
