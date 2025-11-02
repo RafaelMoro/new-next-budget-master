@@ -48,5 +48,9 @@
     "tailwindcss": "^4.1.16",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22.15.1",
+    "pnpm": ">=10.11.0"
   }
 }
