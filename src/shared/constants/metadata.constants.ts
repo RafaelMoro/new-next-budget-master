@@ -6,3 +6,6 @@ export const REGISTER_META_DESCRIPTION = 'Registrate con la mejor app de finanza
 
 export const FORGOT_PASSWORD_META_TITLE = 'Budget Master | ¿Olvide mi contraseña?';
 export const FORGOT_PASSWORD_META_DESCRIPTION = ' Recupera el acceso a tu cuenta de Budget Master ingresando tu correo electrónico.';
+
+export const RESET_PASSWORD_META_TITLE = 'Budget Master | Restablecer contraseña';
+export const RESET_PASSWORD_META_DESCRIPTION = 'Restablece tu contraseña de Budget Master y vuelve a acceder a tu app de finanzas personales.';
