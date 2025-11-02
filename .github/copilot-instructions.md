@@ -20,6 +20,10 @@ For the unit tests, consider the following instructions:
 
 - Remember to use userEvent for user interactions. Do not use fireEvent.
 
+- Do not write tests asserting CSS classes or style classes in components. Focus on testing behavior, functionality, and rendered content instead.
+
+- Do not extract container from render (e.g., `const { container } = render(...)`). Do not use querySelector or other DOM query methods. Always use `screen` from React Testing Library to query elements.
+
 - Do not mock custom hooks like shown in the snippet below
 
 - Do not mock the sonner library (e.g., Toaster, toast) in your tests.
