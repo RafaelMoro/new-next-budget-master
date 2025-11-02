@@ -3,14 +3,14 @@ import { useRouter } from 'next/navigation'
 import { Button, Card, CheckIcon, Label, Spinner, TextInput } from "flowbite-react"
 import { AnimatePresence } from "motion/react"
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import { LOGIN_ROUTE } from "@/shared/constants/global.constants"
 import { LinkButton } from "@/shared/ui/atoms/LinkButton"
 import { ForgotPasswordData, ForgotPasswordFormValues, ForgotPasswordSchema } from '@/shared/types/login.types'
-import { yupResolver } from '@hookform/resolvers/yup'
 import { handleErrorForm } from '@/shared/utils/global.utils'
 import { ErrorMessage } from '@/shared/ui/atoms/ErrorMessage'
-import { useMutation } from '@tanstack/react-query'
 import { GeneralApiError } from '@/shared/types/global.types'
 import { forgotPasswordCb } from '@/shared/utils/login.utils'
 
