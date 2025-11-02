@@ -20,6 +20,10 @@ export type InputsUserPassword = {
   confirmPassword: string
 }
 
+export type ForgotPasswordFormValues= {
+  email: string;
+}
+
 export type UserPasswordPayload = {
   email: string
   password: string
@@ -120,3 +124,7 @@ export const UserAndPasswordSchema = object().shape({
   password: passwordValidation('Por favor, ingrese una contraseña'),
   confirmPassword: confirmPasswordValidation,
 });
+
+export const ForgotPasswordSchema: ObjectSchema<ForgotPasswordFormValues> = object().shape({
+  email: emailValidation
+})
