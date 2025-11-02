@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
+import { redirect } from 'next/navigation';
 
 import { LOGIN_META_DESCRIPTION, LOGIN_META_TITLE } from "@/shared/constants/metadata.constants";
 import { Header } from "@/shared/ui/organisms/Header";
 import { LoginCard } from "@/features/Login/Login/LoginCard";
+import { getAccessToken } from "@/shared/lib/auth.lib";
+import { DASHBOARD_ROUTE } from "@/shared/constants/global.constants";
 
 export const metadata: Metadata = {
   title: LOGIN_META_TITLE,
   description: LOGIN_META_DESCRIPTION,
 };
 
-export default function Home() {
+export default async function Home() {
+  const accessToken = await getAccessToken()
+  if (accessToken) {
+    redirect(DASHBOARD_ROUTE)
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
