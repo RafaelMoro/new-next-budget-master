@@ -8,6 +8,12 @@ export type LoginFormValues = {
   password: string;
 }
 
+export type InputsPersonalInformation = {
+  firstName: string
+  middleName?: string
+  lastName: string
+}
+
 //#region Data interfaces
 export interface LoginData {
   data: {
@@ -40,4 +46,10 @@ const emailValidation = string().email(ERROR_INVALID_EMAIL).required(ERROR_EMAIL
 export const LoginSchema: ObjectSchema<LoginFormValues> = object().shape({
   email: emailValidation,
   password: string().required(ERROR_PASSWORD_REQUIRED)
+})
+
+export const PersonalInformationSchema: ObjectSchema<InputsPersonalInformation> = object().shape({
+  firstName: string().required('Nombre es requerido').min(2, 'El nombre debe tener al menos 2 caracteres'),
+  middleName: string().optional(),
+  lastName: string().required('Apellido es requerido').min(2, 'El apellido debe tener al menos 2 caracteres')
 })
