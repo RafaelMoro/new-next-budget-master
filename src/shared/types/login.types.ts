@@ -75,6 +75,14 @@ export interface CreateUserData {
   version: string;
 }
 
+export interface ForgotPasswordData {
+  data: null
+  error: null;
+  message: 'Email Sent';
+  success: boolean;
+  version: string;
+}
+
 export interface CreateUserError extends Omit<AxiosError, 'response'> {
   response: AxiosResponse<{
     error: {

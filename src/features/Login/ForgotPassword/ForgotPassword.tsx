@@ -1,15 +1,18 @@
 "use client"
 import { useRouter } from 'next/navigation'
-import { Button, Card, Label, TextInput } from "flowbite-react"
+import { Button, Card, CheckIcon, Label, Spinner, TextInput } from "flowbite-react"
 import { AnimatePresence } from "motion/react"
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { LOGIN_ROUTE } from "@/shared/constants/global.constants"
 import { LinkButton } from "@/shared/ui/atoms/LinkButton"
-import { ForgotPasswordFormValues, ForgotPasswordSchema } from '@/shared/types/login.types'
+import { ForgotPasswordData, ForgotPasswordFormValues, ForgotPasswordSchema } from '@/shared/types/login.types'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { handleErrorForm } from '@/shared/utils/global.utils'
 import { ErrorMessage } from '@/shared/ui/atoms/ErrorMessage'
+import { useMutation } from '@tanstack/react-query'
+import { GeneralApiError } from '@/shared/types/global.types'
+import { forgotPasswordCb } from '@/shared/utils/login.utils'
 
 export const ForgotPassword = () => {
   const router = useRouter()
@@ -22,9 +25,18 @@ export const ForgotPassword = () => {
     resolver: yupResolver(ForgotPasswordSchema)
   })
 
+  const { mutate: forgotPwdMutation, isError, isPending, isSuccess, isIdle, error } = useMutation<ForgotPasswordData, GeneralApiError, ForgotPasswordFormValues>({
+    mutationFn: forgotPasswordCb,
+    onSuccess: () => {
+      setTimeout(() => {
+        router.push(LOGIN_ROUTE)
+      }, 1000)
+    }
+  })
+
   const onSubmit: SubmitHandler<ForgotPasswordFormValues> = async (data) => {
     try {
-      // forgotPwdMutation(data)
+      forgotPwdMutation(data)
     }
     catch (error: unknown) {
       const infoError = handleErrorForm(error);
@@ -59,13 +71,12 @@ export const ForgotPassword = () => {
           </LinkButton>
           <Button
             className="hover:cursor-pointer"
-            // disabled={isPending || isSuccess}
+            disabled={isPending || isSuccess}
             type="submit"
           >
-            Enviar
-            {/* { (isIdle || isError) && 'Enviar'}
+            { (isIdle || isError) && 'Enviar'}
             { isPending && (<Spinner aria-label="loading login budget master" />) }
-            { isSuccess && (<CheckIcon />)} */}
+            { isSuccess && (<CheckIcon />)}
           </Button>
         </form>
       </Card>

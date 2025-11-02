@@ -7,6 +7,7 @@ export const DASHBOARD_ROUTE = '/dashboard';
 // API Endpoints
 export const LOGIN_API_ENDPOINT = '/api';
 export const CREATE_USER_API_ENDPOINT = '/api/users/create-user';
+export const FORGOT_PASSWORD_API_ENDPOINT = '/api/users/forgot-password';
 
 // Cookies
 export const THEME_COOKIE_KEY = 'theme-budget-master'
