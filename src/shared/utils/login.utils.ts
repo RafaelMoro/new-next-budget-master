@@ -1,10 +1,11 @@
 import axios from "axios";
 import { CreateUserData, CreateUserPayload, LoginData, LoginFormValues } from "../types/login.types";
 import { CookieObject } from "../types/global.types";
+import { CREATE_USER_API_ENDPOINT, LOGIN_API_ENDPOINT } from "../constants/global.constants";
 
 export const LoginMutationCb = async (data: LoginFormValues): Promise<LoginData> => {
   try {
-    const response = await axios.post('/api', data)
+    const response = await axios.post(LOGIN_API_ENDPOINT, data)
     return response.data
   } catch (error) {
     throw error
@@ -21,10 +22,11 @@ export function getCookieProps(setCookieStr: string): CookieObject {
   return { name, value };
 }
 
-export const createUserCb = (data: CreateUserPayload): Promise<CreateUserData> => {
-  const uri = process.env.NEXT_PUBLIC_BACKEND_URI
-  if (!uri) {
-    throw new Error("Backend URI is not defined");
+export const createUserCb = async (data: CreateUserPayload): Promise<CreateUserData> => {
+  try {
+    const response = await axios.post(CREATE_USER_API_ENDPOINT, data)
+    return response.data
+  } catch (error) {
+    throw error
   }
-  return axios.post(`${uri}/users`, data)
 }
