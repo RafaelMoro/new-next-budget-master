@@ -77,7 +77,9 @@ export const Register = () => {
 
   return (
     <>
-      <Stepper steps={steps} currentStep={step} />
+      <div className="w-full flex justify-center">
+        <Stepper steps={steps} currentStep={step} />
+      </div>
       <div className="flex-1 flex justify-center items-center">
         { step === 1 && (
           <PersonalInformation

@@ -22,10 +22,11 @@ export function getCookieProps(setCookieStr: string): CookieObject {
   return { name, value };
 }
 
-export const createUserCb = async (data: CreateUserPayload): Promise<CreateUserData> => {
+export const createUserCb = async (payload: CreateUserPayload): Promise<CreateUserData> => {
   try {
-    const response = await axios.post(CREATE_USER_API_ENDPOINT, data)
-    return response.data
+    const response = await axios.post<CreateUserData>(CREATE_USER_API_ENDPOINT, payload)
+    const data = response.data
+    return data
   } catch (error) {
     throw error
   }
