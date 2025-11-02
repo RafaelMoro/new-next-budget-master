@@ -17,8 +17,9 @@ export const getThemePreference = async () => {
       return 'dark'
     }
     return theme
-  } catch (error) {
-    console.error('Error getting theme preference:', error)
+  } catch {
+    // During static generation, cookies are not available
+    // Return default theme
     return 'dark'
   }
 }

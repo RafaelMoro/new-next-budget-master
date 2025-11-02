@@ -4,6 +4,8 @@ import "./globals.css";
 
 import { getThemePreference } from "@/shared/lib/preferences.lib";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   icons: {
     icon: '/logo.svg'
