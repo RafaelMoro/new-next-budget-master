@@ -1,16 +1,22 @@
 "use client"
 import Link from "next/link";
-import { Button, Card, Label, TextInput } from "flowbite-react"
+import { useRouter } from 'next/navigation'
+import { Button, Card, Label, Spinner, TextInput } from "flowbite-react"
 import { AnimatePresence } from "motion/react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 
-import { LoginFormValues, LoginSchema } from "@/shared/types/login.types"
+import { LoginData, LoginError, LoginFormValues, LoginSchema } from "@/shared/types/login.types"
 import { ErrorMessage } from "@/shared/ui/atoms/ErrorMessage"
-import { FORGOT_PASSWORD_ROUTE, REGISTER_ROUTE } from "@/shared/constants/global.constants";
+import { DASHBOARD_ROUTE, FORGOT_PASSWORD_ROUTE, REGISTER_ROUTE } from "@/shared/constants/global.constants";
 import { LinkButton } from "@/shared/ui/atoms/LinkButton";
+import { useMutation } from "@tanstack/react-query";
+import { LoginMutationCb } from "@/shared/utils/login.utils";
+import { CheckIcon } from "@/shared/ui/icons/CheckIcon";
 
 export const LoginCard = () => {
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -19,12 +25,21 @@ export const LoginCard = () => {
     resolver: yupResolver(LoginSchema)
   })
 
+  const { mutate: loginMutation, isError, isPending, isSuccess, isIdle, error } = useMutation<LoginData, LoginError, LoginFormValues>({
+    mutationFn: LoginMutationCb,
+    onSuccess: () => {
+      setTimeout(() => {
+        router.push(DASHBOARD_ROUTE)
+      }, 1000)
+    }
+  })
+
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
     const dataForm = {
       email: data.email,
       password: data.password
     }
-    // loginMutation(dataForm)
+    loginMutation(dataForm)
   }
 
   return (
@@ -70,13 +85,12 @@ export const LoginCard = () => {
           </LinkButton>
           <Button
             className="hover:cursor-pointer"
-            // disabled={isPending || isSuccess}
+            disabled={isPending || isSuccess}
             type="submit"
           >
-            Iniciar sesión
-            {/* { (isIdle || isError) && 'Iniciar sesión'}
+            { (isIdle || isError) && 'Iniciar sesión'}
             { isPending && (<Spinner aria-label="loading login budget master" />) }
-            { isSuccess && (<CheckIcon />)} */}
+            { isSuccess && (<CheckIcon />)}
           </Button>
         </form>
       </Card>

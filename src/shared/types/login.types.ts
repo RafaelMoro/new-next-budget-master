@@ -1,9 +1,35 @@
 import { object, ObjectSchema, string } from "yup";
+import type { AxiosError, AxiosResponse } from "axios";
+
 import { ERROR_INVALID_EMAIL, ERROR_EMAIL_REQUIRED, ERROR_PASSWORD_REQUIRED } from "../constants/login.constants";
 
 export type LoginFormValues = {
   email: string;
   password: string;
+}
+
+//#region Data interfaces
+export interface LoginData {
+  data: {
+    user: {
+      email: string;
+      firstName: string;
+      lastName: string;
+      middleName: string;
+      _id: string
+      __v: number
+    }
+  }
+  error: null;
+  message: null;
+  success: boolean;
+  version: string;
+}
+
+export interface LoginError extends Omit<AxiosError, 'response'> {
+  response: AxiosResponse<{
+    message: string;
+  }>;
 }
 
 //#region Form schemas
