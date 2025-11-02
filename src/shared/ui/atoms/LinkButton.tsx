@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import clsx from "clsx";
 
 interface LinkButtonProps {
   children: ReactNode
@@ -25,7 +26,7 @@ export const LinkButton = ({ children, href, className, type = 'primary', dataTe
   return (
     <Link
       data-testid={dataTestId}
-      className={`${cssDic[type]} ${className && className}`}
+      className={clsx(cssDic[type], className)}
       href={href}
     >{children}</Link>
   )
