@@ -56,12 +56,6 @@ export interface LoginData {
   version: string;
 }
 
-export interface LoginError extends Omit<AxiosError, 'response'> {
-  response: AxiosResponse<{
-    message: string;
-  }>;
-}
-
 export interface CreateUserData {
   data: {
     userCreated: {
