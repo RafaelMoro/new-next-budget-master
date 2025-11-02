@@ -1,8 +1,13 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from '@testing-library/user-event'
+import axios from 'axios';
+
 import HomePage from "@/app/page";
 import { QueryProviderWrapper } from "@/app/QueryProviderWrapper";
 import { AppRouterContextProviderMock } from "@/shared/ui/organisms/AppRouterContextProviderMock";
-import { render, screen } from "@testing-library/react";
 
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 // Mock next/headers
 jest.mock('next/headers', () => ({
   cookies: jest.fn(() => ({
@@ -69,5 +74,43 @@ describe('Login', () => {
     expect(screen.getByLabelText(/correo electrónico/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/contraseña/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /iniciar sesión/i })).toBeInTheDocument()
+  })
+
+  describe('Validation form', () => {
+    it('Given the email being empty, show an error to the user', async () => {
+      const user = userEvent.setup()
+      const push = jest.fn();
+      render(await Home({ push }))
+    
+      const signInButton = screen.getByRole('button', { name: /iniciar sesión/i })
+      const pwdInput = screen.getByLabelText(/contraseña/i)
+      await user.type(pwdInput, '1')
+      await user.click(signInButton)
+      expect(await screen.findByText(/Por favor, ingrese su correo electrónico/i))
+    })
+
+    it('Given a user filling the email wrong, show invalid email error ', async () => {
+      const user = userEvent.setup()
+      const push = jest.fn();
+      render(await Home({ push }))
+    
+      const pwdInput = screen.getByLabelText(/contraseña/i)
+      await user.type(pwdInput, '1')
+      const emailInput = screen.getByLabelText(/correo electrónico/i)
+      await user.type(emailInput, 'correo-electronico@a')
+      const signInButton = screen.getByRole('button', { name: /iniciar sesión/i })
+      await user.click(signInButton)
+      expect(await screen.findByText(/Correo electrónico inválido/i))
+    })
+
+    it('Given a user leaving the password empty, show password required error', async () => {
+      const user = userEvent.setup()
+      const push = jest.fn();
+      render(await Home({ push }))
+    
+      const signInButton = screen.getByRole('button', { name: /iniciar sesión/i })
+      await user.click(signInButton)
+      expect(await screen.findByText(/Por favor, ingrese su contraseña/i))
+    })
   })
 })
