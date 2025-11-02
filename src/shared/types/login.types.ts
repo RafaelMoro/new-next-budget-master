@@ -14,6 +14,16 @@ export type InputsPersonalInformation = {
   lastName: string
 }
 
+export type UserPasswordPayload = {
+  email: string
+  password: string
+}
+
+export type FormDataRegister = {
+  personalInformation: InputsPersonalInformation
+  userPasswordInfo: UserPasswordPayload
+}
+
 //#region Data interfaces
 export interface LoginData {
   data: {
