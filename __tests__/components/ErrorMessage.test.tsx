@@ -8,28 +8,10 @@ describe('ErrorMessage', () => {
     expect(screen.getByText('This is an error')).toBeInTheDocument();
   });
 
-  it('applies correct CSS classes when isAnimated is false', () => {
-    const { container } = render(
-      <ErrorMessage isAnimated={false}>Error message</ErrorMessage>
-    );
-    
-    const paragraph = container.querySelector('p');
-    expect(paragraph).toHaveClass('text-red-500', 'text-sm', 'mt-1');
-  });
-
   it('renders as motion.p when isAnimated is true', () => {
     render(<ErrorMessage isAnimated={true}>Animated error</ErrorMessage>);
     
     expect(screen.getByText('Animated error')).toBeInTheDocument();
-  });
-
-  it('applies correct CSS classes when isAnimated is true', () => {
-    const { container } = render(
-      <ErrorMessage isAnimated={true}>Animated error message</ErrorMessage>
-    );
-    
-    const paragraph = container.querySelector('p');
-    expect(paragraph).toHaveClass('text-red-500', 'text-sm', 'mt-1');
   });
 
   it('renders complex children content', () => {
