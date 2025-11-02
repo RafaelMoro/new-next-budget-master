@@ -1,3 +1,5 @@
+import { AxiosError, AxiosResponse } from "axios";
+
 export type ThemeMode = 'light' | 'dark';
 
 export type ErrorCatched = {
@@ -20,4 +22,10 @@ export type GeneralError = {
       }
     }
   }
+}
+
+export interface GeneralApiError extends Omit<AxiosError, 'response'> {
+  response: AxiosResponse<{
+    message: string;
+  }>;
 }

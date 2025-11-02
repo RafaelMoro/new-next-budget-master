@@ -11,6 +11,7 @@ export const ERROR_PASSWORD_REQUIRED = 'Por favor, ingrese su contraseña'
 export const ERROR_UNAUTHORIZED_LOGIN_MESSAGE = 'Correo electronico o contraseña incorrecta.';
 export const ERROR_CREATE_USER_TITLE = 'Oops! Algo no salió como esperabamos.';
 export const ERROR_CREATE_USER_MESSAGE = 'Por favor intente nuevamente más tarde.';
+export const ERROR_TRY_DIFFERENT_EMAIL = 'Intente con otro correo electrónico'
 
 // Messaging
 export const SUCCESS_CREATE_USER_TITLE = '¡Bienvenido!';

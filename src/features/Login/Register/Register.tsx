@@ -10,8 +10,8 @@ import { CreateUserData, CreateUserError, CreateUserPayload, FormDataRegister, I
 import { UserRegistrationForm } from "./UserRegistration";
 import { createUserCb } from "@/shared/utils/login.utils";
 import { ResultCard } from "./ResultCard";
-import { ERROR_CREATE_USER_MESSAGE, ERROR_CREATE_USER_TITLE, ERROR_EMAIL_IN_USE, SUCCESS_CREATE_USER_MESSAGE, SUCCESS_CREATE_USER_TITLE } from "@/shared/constants/login.constants";
-import { GeneralError } from "@/shared/types/global.types";
+import { ERROR_CREATE_USER_MESSAGE, ERROR_CREATE_USER_TITLE, ERROR_EMAIL_IN_USE, ERROR_TRY_DIFFERENT_EMAIL, SUCCESS_CREATE_USER_MESSAGE, SUCCESS_CREATE_USER_TITLE } from "@/shared/constants/login.constants";
+import { GeneralApiError, GeneralError } from "@/shared/types/global.types";
 
 export const Register = () => {
   const steps = new Set(["Información Personal", "Usuario y contraseña", "Resultado"])
@@ -25,7 +25,7 @@ export const Register = () => {
       isPending,
       isSuccess,
       error
-    } = useMutation<CreateUserData, AxiosResponse<CreateUserError>, CreateUserPayload>({
+    } = useMutation<CreateUserData, GeneralApiError, CreateUserPayload>({
     mutationFn: createUserCb,
     onError: () => {
       goNextView()
@@ -34,8 +34,8 @@ export const Register = () => {
       goNextView()
     }
   })
-  const currentMessageError = (error as unknown as GeneralError)?.response?.data?.error?.message
-  const messageError = currentMessageError === ERROR_EMAIL_IN_USE ? 'Intente con otro correo electrónico' : ERROR_CREATE_USER_MESSAGE
+  const currentMessageError = error?.response?.data?.message
+  const messageError = currentMessageError === ERROR_EMAIL_IN_USE ? ERROR_TRY_DIFFERENT_EMAIL : ERROR_CREATE_USER_MESSAGE
 
   const formData = useRef<FormDataRegister>({
     personalInformation: {
