@@ -29,3 +29,7 @@ export interface GeneralApiError extends Omit<AxiosError, 'response'> {
     message: string;
   }>;
 }
+
+export interface YupError {
+  message: string;
+}

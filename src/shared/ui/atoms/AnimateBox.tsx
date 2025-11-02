@@ -1,4 +1,4 @@
-import { motion, AnimatePresence, AnimationGeneratorType } from "motion/react"
+import { motion, AnimatePresence } from "motion/react"
 import { ReactNode } from "react";
 
 const variantsAnimateBox = {

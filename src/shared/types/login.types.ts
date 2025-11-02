@@ -20,6 +20,10 @@ export type InputsUserPassword = {
   confirmPassword: string
 }
 
+export type ForgotPasswordFormValues= {
+  email: string;
+}
+
 export type UserPasswordPayload = {
   email: string
   password: string
@@ -67,6 +71,14 @@ export interface CreateUserData {
   }
   error: null;
   message: null;
+  success: boolean;
+  version: string;
+}
+
+export interface ForgotPasswordData {
+  data: null
+  error: null;
+  message: 'Email Sent';
   success: boolean;
   version: string;
 }
@@ -120,3 +132,7 @@ export const UserAndPasswordSchema = object().shape({
   password: passwordValidation('Por favor, ingrese una contraseña'),
   confirmPassword: confirmPasswordValidation,
 });
+
+export const ForgotPasswordSchema: ObjectSchema<ForgotPasswordFormValues> = object().shape({
+  email: emailValidation
+})
