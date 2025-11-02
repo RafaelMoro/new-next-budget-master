@@ -62,6 +62,29 @@ export interface LoginError extends Omit<AxiosError, 'response'> {
   }>;
 }
 
+export interface CreateUserData {
+  data: {
+    userCreated: {
+			email: string;
+			firstName: string;
+      middleName: string;
+      lastName: string;
+		}
+  }
+  error: null;
+  message: null;
+  success: boolean;
+  version: string;
+}
+
+export interface CreateUserError extends Omit<AxiosError, 'response'> {
+  response: AxiosResponse<{
+    error: {
+      error: string
+    }
+  }>;
+}
+
 //#region Form schemas
 const emailRegex = /^[^@]+@[^@]+\.[^@]+$/;
 

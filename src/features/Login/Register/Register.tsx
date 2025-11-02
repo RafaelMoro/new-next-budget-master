@@ -1,17 +1,36 @@
 "use client"
 import { useRef } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
 import { useAnimateBox } from "@/shared/hooks/useAnimateBox";
 import { Stepper } from "@/shared/ui/atoms/Stepper";
 import { PersonalInformation } from "./PersonalInformation";
-import { CreateUserPayload, FormDataRegister, InputsPersonalInformation, InputsUserPassword, UserPasswordPayload } from "@/shared/types/login.types";
+import { CreateUserData, CreateUserError, CreateUserPayload, FormDataRegister, InputsPersonalInformation, InputsUserPassword, UserPasswordPayload } from "@/shared/types/login.types";
 import { UserRegistrationForm } from "./UserRegistration";
+import { createUserCb } from "@/shared/utils/login.utils";
 
 export const Register = () => {
   const steps = new Set(["Información Personal", "Usuario y contraseña", "Resultado"])
   const {
     direction, step, goPreviousView, goNextView, resetCounterView,
   } = useAnimateBox({ firstStep: 1, lastStepNumber: 3 });
+
+  const {
+      mutate: createUserMutation,
+      isError,
+      isPending,
+      isSuccess,
+      error
+    } = useMutation<CreateUserData, AxiosResponse<CreateUserError>, CreateUserPayload>({
+    mutationFn: createUserCb,
+    onError: () => {
+      goNextView()
+    },
+    onSuccess: () => {
+      goNextView()
+    }
+  })
 
   const formData = useRef<FormDataRegister>({
     personalInformation: {
@@ -69,7 +88,7 @@ export const Register = () => {
             goBack={goPreviousView}
             updateUserPasswordInfo={updateUserPassword}
             submitForm={handleSubmit}
-            isLoading={false}
+            isLoading={isPending}
           />
         )}
       </div>
