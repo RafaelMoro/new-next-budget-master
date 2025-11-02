@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Card, Button, Label, TextInput } from "flowbite-react";
 import { useForm, SubmitHandler } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup";;
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { InputsPersonalInformation, PersonalInformationSchema } from "@/shared/types/login.types";
 import { AnimateBox } from "@/shared/ui/atoms/AnimateBox";
