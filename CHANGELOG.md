@@ -1,3 +1,9 @@
+## v0.7.0 (2025-11-02)
+
+### Pull Requests
+[#6](https://github.com/RafaelMoro/new-next-budget-master/pull/6) | Add login
+
+
 ## v0.6.0 (2025-11-01)
 
 ### Pull Requests
