@@ -9,6 +9,9 @@ import { PersonalInformation } from "./PersonalInformation";
 import { CreateUserData, CreateUserError, CreateUserPayload, FormDataRegister, InputsPersonalInformation, InputsUserPassword, UserPasswordPayload } from "@/shared/types/login.types";
 import { UserRegistrationForm } from "./UserRegistration";
 import { createUserCb } from "@/shared/utils/login.utils";
+import { ResultCard } from "./ResultCard";
+import { ERROR_CREATE_USER_MESSAGE, ERROR_CREATE_USER_TITLE, ERROR_EMAIL_IN_USE, SUCCESS_CREATE_USER_MESSAGE, SUCCESS_CREATE_USER_TITLE } from "@/shared/constants/login.constants";
+import { GeneralError } from "@/shared/types/global.types";
 
 export const Register = () => {
   const steps = new Set(["Información Personal", "Usuario y contraseña", "Resultado"])
@@ -31,6 +34,8 @@ export const Register = () => {
       goNextView()
     }
   })
+  const currentMessageError = (error as unknown as GeneralError)?.response?.data?.error?.message
+  const messageError = currentMessageError === ERROR_EMAIL_IN_USE ? 'Intente con otro correo electrónico' : ERROR_CREATE_USER_MESSAGE
 
   const formData = useRef<FormDataRegister>({
     personalInformation: {
@@ -64,7 +69,7 @@ export const Register = () => {
         email: formData.current.userPasswordInfo.email,
         password: formData.current.userPasswordInfo.password,
       }
-      // createUserMutation(payload)
+      createUserMutation(payload)
     } catch (error) {
       console.log('error when registering user', error)
     }
@@ -89,6 +94,24 @@ export const Register = () => {
             updateUserPasswordInfo={updateUserPassword}
             submitForm={handleSubmit}
             isLoading={isPending}
+          />
+        )}
+        { (step === 3 && isError) && (
+          <ResultCard
+            direction={direction}
+            isError={isError}
+            title={ERROR_CREATE_USER_TITLE}
+            message={messageError}
+            resetStep={resetCounterView}
+          />
+        )}
+        { (step === 3 && isSuccess) && (
+          <ResultCard
+            direction={direction}
+            isError={isError}
+            title={SUCCESS_CREATE_USER_TITLE}
+            message={SUCCESS_CREATE_USER_MESSAGE}
+            resetStep={resetCounterView}
           />
         )}
       </div>
