@@ -13,17 +13,17 @@ jest.mock('next/headers', () => ({
 }));
 
 // Mock jose library to avoid ESM issues
-jest.mock('jose', () => ({
-  SignJWT: jest.fn().mockImplementation(() => ({
-    setProtectedHeader: jest.fn().mockReturnThis(),
-    setIssuedAt: jest.fn().mockReturnThis(),
-    setExpirationTime: jest.fn().mockReturnThis(),
-    sign: jest.fn().mockResolvedValue('mocked-jwt-token'),
-  })),
-  jwtVerify: jest.fn().mockResolvedValue({
-    payload: { accessToken: '' }
-  }),
-}));
+// jest.mock('jose', () => ({
+//   SignJWT: jest.fn().mockImplementation(() => ({
+//     setProtectedHeader: jest.fn().mockReturnThis(),
+//     setIssuedAt: jest.fn().mockReturnThis(),
+//     setExpirationTime: jest.fn().mockReturnThis(),
+//     sign: jest.fn().mockResolvedValue('mocked-jwt-token'),
+//   })),
+//   jwtVerify: jest.fn().mockResolvedValue({
+//     payload: { accessToken: '' }
+//   }),
+// }));
 
 // Mock getAccessToken since it's called in the page component
 jest.mock('../src/shared/lib/auth.lib', () => ({
