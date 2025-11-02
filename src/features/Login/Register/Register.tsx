@@ -4,7 +4,8 @@ import { useRef } from "react";
 import { useAnimateBox } from "@/shared/hooks/useAnimateBox";
 import { Stepper } from "@/shared/ui/atoms/Stepper";
 import { PersonalInformation } from "./PersonalInformation";
-import { FormDataRegister, InputsPersonalInformation } from "@/shared/types/login.types";
+import { CreateUserPayload, FormDataRegister, InputsPersonalInformation, InputsUserPassword, UserPasswordPayload } from "@/shared/types/login.types";
+import { UserRegistrationForm } from "./UserRegistration";
 
 export const Register = () => {
   const steps = new Set(["Información Personal", "Usuario y contraseña", "Resultado"])
@@ -27,6 +28,28 @@ export const Register = () => {
   const updatePersonalInformation = (data: InputsPersonalInformation) => {
     formData.current.personalInformation = data
   }
+  const updateUserPassword = (data: InputsUserPassword) => {
+    const payload: UserPasswordPayload = {
+      email: data.email,
+      password: data.password
+    }
+    formData.current.userPasswordInfo = payload
+  }
+
+  const handleSubmit = async () => {
+    try {
+      const payload: CreateUserPayload = {
+        firstName: formData.current.personalInformation.firstName,
+        middleName: formData.current.personalInformation.middleName ?? '',
+        lastName: formData.current.personalInformation.lastName,
+        email: formData.current.userPasswordInfo.email,
+        password: formData.current.userPasswordInfo.password,
+      }
+      // createUserMutation(payload)
+    } catch (error) {
+      console.log('error when registering user', error)
+    }
+  }
 
   return (
     <>
@@ -38,6 +61,15 @@ export const Register = () => {
             direction={direction}
             personalInformation={formData.current.personalInformation}
             updatePersonalInformation={updatePersonalInformation}
+          />
+        )}
+        { step === 2 && (
+          <UserRegistrationForm
+            direction={direction}
+            goBack={goPreviousView}
+            updateUserPasswordInfo={updateUserPassword}
+            submitForm={handleSubmit}
+            isLoading={false}
           />
         )}
       </div>
