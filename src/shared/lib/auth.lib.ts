@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { SignJWT, jwtVerify } from "jose";
+import { SignJWT } from "jose";
 import { SESSION_COOKIE_KEY } from '../constants/global.constants';
 
 export const saveSessionCookie = async (session: string): Promise<void> => {
