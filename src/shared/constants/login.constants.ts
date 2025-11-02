@@ -1,4 +1,4 @@
-export const ERROR_UNAUTHORIZED_LOGIN = 'Email or Password incorrect.'
+export const ERROR_UNAUTHORIZED_LOGIN_BE_RES = 'Email or Password incorrect.'
 
 export const ERROR_INVALID_EMAIL = 'Correo electrónico inválido';
 export const ERROR_EMAIL_REQUIRED = 'Por favor, ingrese su correo electrónico';

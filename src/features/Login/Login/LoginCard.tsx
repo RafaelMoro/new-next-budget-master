@@ -15,7 +15,7 @@ import { LinkButton } from "@/shared/ui/atoms/LinkButton";
 import { useMutation } from "@tanstack/react-query";
 import { LoginMutationCb } from "@/shared/utils/login.utils";
 import { CheckIcon } from "@/shared/ui/icons/CheckIcon";
-import { ERROR_UNAUTHORIZED_LOGIN, ERROR_UNAUTHORIZED_LOGIN_MESSAGE } from "@/shared/constants/login.constants";
+import { ERROR_UNAUTHORIZED_LOGIN_BE_RES, ERROR_UNAUTHORIZED_LOGIN_MESSAGE } from "@/shared/constants/login.constants";
 
 export const LoginCard = () => {
   const router = useRouter()
@@ -40,7 +40,7 @@ export const LoginCard = () => {
 
   useEffect(() => {
     if (isError && messageError) {
-      if (messageError === ERROR_UNAUTHORIZED_LOGIN) {
+      if (messageError === ERROR_UNAUTHORIZED_LOGIN_BE_RES) {
         toast.error(ERROR_UNAUTHORIZED_LOGIN_MESSAGE);
         return
       }
