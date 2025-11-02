@@ -1,17 +1,16 @@
 "use client"
 import { useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { AxiosResponse } from "axios";
 
 import { useAnimateBox } from "@/shared/hooks/useAnimateBox";
 import { Stepper } from "@/shared/ui/atoms/Stepper";
 import { PersonalInformation } from "./PersonalInformation";
-import { CreateUserData, CreateUserError, CreateUserPayload, FormDataRegister, InputsPersonalInformation, InputsUserPassword, UserPasswordPayload } from "@/shared/types/login.types";
+import { CreateUserData, CreateUserPayload, FormDataRegister, InputsPersonalInformation, InputsUserPassword, UserPasswordPayload } from "@/shared/types/login.types";
 import { UserRegistrationForm } from "./UserRegistration";
 import { createUserCb } from "@/shared/utils/login.utils";
 import { ResultCard } from "./ResultCard";
 import { ERROR_CREATE_USER_MESSAGE, ERROR_CREATE_USER_TITLE, ERROR_EMAIL_IN_USE, ERROR_TRY_DIFFERENT_EMAIL, SUCCESS_CREATE_USER_MESSAGE, SUCCESS_CREATE_USER_TITLE } from "@/shared/constants/login.constants";
-import { GeneralApiError, GeneralError } from "@/shared/types/global.types";
+import { GeneralApiError } from "@/shared/types/global.types";
 
 export const Register = () => {
   const steps = new Set(["Información Personal", "Usuario y contraseña", "Resultado"])
