@@ -96,23 +96,9 @@ describe('ForgotPasswordPage', () => {
       const user = userEvent.setup()
       const push = jest.fn();
       mockedAxios.post.mockRejectedValue({
-        code: 'ERR_BAD_REQUEST',
-        config: null,
-        message: 'Request failed with status code 401',
-        name: 'AxiosError',
-        request: null,
         response: {
-          config: null,
           data: {
-            data: null,
-            error: {
-              error: 'Bad Request',
-              message: 'Something went wrong.',
-              statusCode: 403
-            },
-            message: null,
-            success: false,
-            version: '1.2.0'
+            message: 'Something went wrong.'
           }
         }
       })
