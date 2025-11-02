@@ -1,12 +1,14 @@
 "use client"
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button, Card, CheckIcon, Label, Spinner, TextInput } from "flowbite-react"
 import { AnimatePresence } from "motion/react"
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { toast, Toaster } from "sonner";
 
-import { LOGIN_ROUTE } from "@/shared/constants/global.constants"
+import { GENERAL_ERROR_MESSAGE, LOGIN_ROUTE } from "@/shared/constants/global.constants"
 import { LinkButton } from "@/shared/ui/atoms/LinkButton"
 import { ForgotPasswordData, ForgotPasswordFormValues, ForgotPasswordSchema } from '@/shared/types/login.types'
 import { handleErrorForm } from '@/shared/utils/global.utils'
@@ -33,6 +35,14 @@ export const ForgotPassword = () => {
       }, 1000)
     }
   })
+  const messageError = error?.response?.data?.message
+
+  useEffect(() => {
+    if (isError && messageError) {
+      toast.error(GENERAL_ERROR_MESSAGE);
+      return
+    }
+  }, [isError, messageError])
 
   const onSubmit: SubmitHandler<ForgotPasswordFormValues> = async (data) => {
     try {
@@ -79,6 +89,9 @@ export const ForgotPassword = () => {
             { isSuccess && (<CheckIcon />)}
           </Button>
         </form>
+        { (isError) && (
+          <Toaster position="top-center" />
+        )}
       </Card>
     </AnimatePresence>
   )
