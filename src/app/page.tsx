@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { LOGIN_META_DESCRIPTION, LOGIN_META_TITLE } from "@/shared/constants/metadata.constants";
 import { Header } from "@/shared/ui/organisms/Header";
+import { LoginCard } from "@/features/Login/Login/LoginCard";
 
 export const metadata: Metadata = {
   title: LOGIN_META_TITLE,
@@ -14,6 +15,7 @@ export default function Home() {
       <Header />
       <main className="flex-1 flex flex-col justify-center items-center gap-20 min-h-full">
         <h1 className="text-black dark:text-white text-4xl text-center font-bold">Bienvenido de vuelta</h1>
+        <LoginCard />
       </main>
     </div>
   );
