@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
 import { getThemePreference } from "@/shared/lib/preferences.lib";
+import { QueryProviderWrapper } from "./QueryProviderWrapper";
 
 export const dynamic = 'force-dynamic';
 
@@ -24,7 +25,9 @@ export default async function RootLayout({
       <body
         className={`${GeistSans.className} antialiased bg-gray-100 text-gray-950 dark:text-gray-100 dark:bg-gray-950 transition-colors`}
       >
-        {children}
+        <QueryProviderWrapper>
+          {children}
+        </QueryProviderWrapper>
       </body>
     </html>
   );
