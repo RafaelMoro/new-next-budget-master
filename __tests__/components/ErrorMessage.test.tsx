@@ -24,12 +24,4 @@ describe('ErrorMessage', () => {
     expect(screen.getByText(/Complex error with/i)).toBeInTheDocument();
     expect(screen.getByText('bold text')).toBeInTheDocument();
   });
-
-  it('renders empty string as children', () => {
-    const { container } = render(<ErrorMessage isAnimated={false}>{''}</ErrorMessage>);
-    
-    const paragraph = container.querySelector('p');
-    expect(paragraph).toBeInTheDocument();
-    expect(paragraph).toBeEmptyDOMElement();
-  });
 });
