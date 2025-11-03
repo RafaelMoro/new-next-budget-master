@@ -1,9 +1,12 @@
 import { LOGIN_ROUTE } from "@/shared/constants/global.constants"
-import { ResetPasswordFormValues, ResetPasswordPayload, ResetPasswordSchema, ResetPasswordStatus } from "@/shared/types/login.types";
+import { GeneralApiError } from "@/shared/types/global.types";
+import { ResetPasswordData, ResetPasswordFormValues, ResetPasswordPayload, ResetPasswordSchema, ResetPasswordStatus } from "@/shared/types/login.types";
 import { ErrorMessage } from "@/shared/ui/atoms/ErrorMessage";
 import { LinkButton } from "@/shared/ui/atoms/LinkButton"
+import { resetPasswordCb } from "@/shared/utils/login.utils";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Card, Label, TextInput } from "flowbite-react"
+import { useMutation } from "@tanstack/react-query";
+import { Button, Card, CheckIcon, Label, Spinner, TextInput } from "flowbite-react"
 import { AnimatePresence } from "motion/react"
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -21,11 +24,21 @@ export const ResetPasswordForm = ({ slug, toggleMessageCardState }: ResetPasswor
     resolver: yupResolver(ResetPasswordSchema)
   })
 
+  const { mutate: resetPwdMutation, isError, isPending, isSuccess, isIdle } = useMutation<ResetPasswordData, GeneralApiError, ResetPasswordPayload>({
+    mutationFn: (data) => resetPasswordCb(data, slug),
+    onError: () => {
+      toggleMessageCardState("error")
+    },
+    onSuccess: () => {
+      toggleMessageCardState("success")
+    }
+  })
+
   const onSubmit: SubmitHandler<ResetPasswordFormValues> = (data) => {
     const payload: ResetPasswordPayload = {
       password: data.password
     }
-    // resetPwdMutation(payload)
+    resetPwdMutation(payload)
   }
 
   return (
@@ -69,13 +82,12 @@ export const ResetPasswordForm = ({ slug, toggleMessageCardState }: ResetPasswor
           <LinkButton className="mt-4" type="secondary" href={LOGIN_ROUTE} >Volver al inicio</LinkButton>
             <Button
               className="hover:cursor-pointer"
-              // disabled={isPending || isSuccess}
+              disabled={isPending || isSuccess}
               type="submit"
               >
-                Reestablecer contraseña
-            {/* { (isIdle || isError) && 'Reestablecer contraseña'}
+            { (isIdle || isError) && 'Reestablecer contraseña'}
             { isPending && (<Spinner aria-label="loading reset password budget master" />) }
-            { isSuccess && (<CheckIcon />)} */}
+            { isSuccess && (<CheckIcon />)}
           </Button>
         </form>
       </Card>
