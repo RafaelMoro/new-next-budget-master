@@ -5,6 +5,7 @@ import { getAccessToken } from "@/shared/lib/auth.lib";
 import { fetchAccounts } from "@/shared/lib/dashboard.lib";
 import { getAccountCookie } from "@/shared/lib/preferences.lib";
 import { DashboardStoreProvider } from "@/zustand/provider/dashboard-store-provider";
+import { LoginRequiredModal } from "@/shared/ui/organisms/LoginRequiredModal";
 
 export const metadata: Metadata = {
   title: DASHBOARD_META_TITLE,
@@ -26,6 +27,7 @@ export default async function DashboardPage() {
   // TODO: Change the fetch of records
   return (
     <DashboardStoreProvider records={[]} accounts={accounts} selectedAccountId={selectedAccount}>
+      <LoginRequiredModal accessToken={accessToken} />
       <h1>Dashboard</h1>
     </DashboardStoreProvider>
   )
