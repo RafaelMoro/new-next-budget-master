@@ -42,6 +42,12 @@ export type CreateUserPayload = {
   password: string
 }
 
+export type ResetPasswordStatus = "idle" | "success" | "error"
+export type MessageCardState = {
+  show: boolean;
+  status: ResetPasswordStatus;
+}
+
 //#region Data interfaces
 export interface LoginData {
   data: {
