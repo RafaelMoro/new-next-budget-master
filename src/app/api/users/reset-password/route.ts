@@ -9,7 +9,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ResetPass
     const payload: ResetPasswordPayload = await request.json()
     const { slug } = payload
     const uri = `${process.env.BACKEND_URI}/users/reset-password/${slug}`
-    const res = await axios.post<ResetPasswordData>(uri, payload)
+    const res = await axios.post<ResetPasswordData>(uri, { password: payload.password })
     const data = res.data
 
     return NextResponse.json(data, { status: 201 })
