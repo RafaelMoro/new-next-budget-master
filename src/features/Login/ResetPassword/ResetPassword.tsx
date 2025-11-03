@@ -3,6 +3,7 @@ import { useState } from "react"
 
 import { MessageCardState, ResetPasswordStatus } from "@/shared/types/login.types"
 import { ResetPasswordForm } from "./ResetPasswordForm"
+import { PasswordResetStatusCard } from "./ResetPasswordStatusCard"
 
 export const ResetPassword = ({ slug }: { slug: string }) => {
   const [messageCardState, setmessageCardState] = useState<MessageCardState>({
@@ -25,6 +26,7 @@ export const ResetPassword = ({ slug }: { slug: string }) => {
         </h1>
       ) }
       { !messageCardState.show && (<ResetPasswordForm slug={slug} toggleMessageCardState={toggleMessageCardState} />) }
+      { messageCardState.show && (<PasswordResetStatusCard status={messageCardState.status} />) }
     </>
   )
 }
