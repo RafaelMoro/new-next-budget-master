@@ -23,6 +23,14 @@ export type InputsUserPassword = {
 export type ForgotPasswordFormValues= {
   email: string;
 }
+export type ResetPasswordFormValues = {
+  password: string
+  confirmPassword: string
+}
+export type ResetPasswordPayload = {
+  password: string
+  slug: string;
+}
 
 export type UserPasswordPayload = {
   email: string
@@ -40,6 +48,12 @@ export type CreateUserPayload = {
   lastName: string
   email: string
   password: string
+}
+
+export type ResetPasswordStatus = "idle" | "success" | "error"
+export type MessageCardState = {
+  show: boolean;
+  status: ResetPasswordStatus;
 }
 
 //#region Data interfaces
@@ -79,6 +93,14 @@ export interface ForgotPasswordData {
   data: null
   error: null;
   message: 'Email Sent';
+  success: boolean;
+  version: string;
+}
+
+export interface ResetPasswordData {
+  data: null
+  error: null;
+  message: 'Reset password successfully';
   success: boolean;
   version: string;
 }
@@ -135,4 +157,9 @@ export const UserAndPasswordSchema = object().shape({
 
 export const ForgotPasswordSchema: ObjectSchema<ForgotPasswordFormValues> = object().shape({
   email: emailValidation
+})
+
+export const ResetPasswordSchema = object().shape({
+  password: passwordValidation('Por favor, ingrese una contraseña'),
+  confirmPassword: confirmPasswordValidation,
 })

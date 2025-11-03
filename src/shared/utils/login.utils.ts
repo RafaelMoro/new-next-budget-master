@@ -1,7 +1,7 @@
 import axios from "axios";
-import { CreateUserData, CreateUserPayload, ForgotPasswordData, ForgotPasswordFormValues, LoginData, LoginFormValues } from "../types/login.types";
+import { CreateUserData, CreateUserPayload, ForgotPasswordData, ForgotPasswordFormValues, LoginData, LoginFormValues, ResetPasswordData, ResetPasswordPayload } from "../types/login.types";
 import { CookieObject } from "../types/global.types";
-import { CREATE_USER_API_ENDPOINT, FORGOT_PASSWORD_API_ENDPOINT, LOGIN_API_ENDPOINT } from "../constants/global.constants";
+import { CREATE_USER_API_ENDPOINT, FORGOT_PASSWORD_API_ENDPOINT, LOGIN_API_ENDPOINT, RESET_PASSWORD_API_ENDPOINT } from "../constants/global.constants";
 
 export const LoginMutationCb = async (data: LoginFormValues): Promise<LoginData> => {
   try {
@@ -35,6 +35,16 @@ export const createUserCb = async (payload: CreateUserPayload): Promise<CreateUs
 export const forgotPasswordCb = async (payload: ForgotPasswordFormValues): Promise<ForgotPasswordData> => {
   try {
     const response = await axios.post<ForgotPasswordData>(FORGOT_PASSWORD_API_ENDPOINT, payload)
+    const data = response.data
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const resetPasswordCb = async (payload: ResetPasswordPayload): Promise<ResetPasswordData> => {
+  try {
+    const response = await axios.post<ResetPasswordData>(RESET_PASSWORD_API_ENDPOINT, payload)
     const data = response.data
     return data
   } catch (error) {
