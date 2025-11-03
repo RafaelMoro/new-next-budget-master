@@ -1,7 +1,7 @@
 "use server"
 import { cookies } from 'next/headers'
 
-import { ACCOUNT_COOKIE_KEY, THEME_COOKIE_KEY } from '../constants/global.constants'
+import { ACCOUNT_COOKIE_KEY, DASHBOARD_SCREEN_KEY, THEME_COOKIE_KEY } from '../constants/global.constants'
 import { ThemeMode } from '../types/global.types'
 
 /**
@@ -62,5 +62,23 @@ export const getAccountCookie = async () => {
     return account
   } catch (error) {
     console.error('Error deleting theme preference:', error)
+  }
+}
+
+/**
+ * This function saves the dashboard subscreen selection into the cookie
+ * @param dashboardScreen - The dashboard subscreen
+ * @returns Promise<void>
+ */
+export const saveDashboardScreen = async (dashboardScreen: string): Promise<void> => {
+  try {
+    const cookieStore = await cookies()
+    cookieStore.set(DASHBOARD_SCREEN_KEY, dashboardScreen, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  })
+  } catch (error) {
+    console.error('Error saving dashboard preference:', error)
   }
 }
