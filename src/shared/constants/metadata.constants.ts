@@ -9,3 +9,6 @@ export const FORGOT_PASSWORD_META_DESCRIPTION = ' Recupera el acceso a tu cuenta
 
 export const RESET_PASSWORD_META_TITLE = 'Budget Master | Restablecer contraseña';
 export const RESET_PASSWORD_META_DESCRIPTION = 'Restablece tu contraseña de Budget Master y vuelve a acceder a tu app de finanzas personales.';
+
+export const DASHBOARD_META_TITLE = ' Budget Master | Panel de administración';
+export const DASHBOARD_META_DESCRIPTION = 'Bienvenido al best personal expense tracker app. Desde este panel de administración organiza tus finanzas y analiza gastos con facilidad. ¡Accede ahora!';

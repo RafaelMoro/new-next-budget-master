@@ -13,6 +13,8 @@ export const RESET_PASSWORD_API_ENDPOINT = '/api/users/reset-password';
 // Cookies
 export const THEME_COOKIE_KEY = 'theme-budget-master'
 export const SESSION_COOKIE_KEY = 'session-budget-master'
+// Stands for fintrack selected bank account
+export const ACCOUNT_COOKIE_KEY = 'ftk_sba'
 
 // Errors
 export const GENERAL_ERROR_MESSAGE = 'Oops! Algo no salió como esperabamos.';

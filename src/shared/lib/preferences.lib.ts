@@ -1,7 +1,7 @@
 "use server"
 import { cookies } from 'next/headers'
 
-import { THEME_COOKIE_KEY } from '../constants/global.constants'
+import { ACCOUNT_COOKIE_KEY, THEME_COOKIE_KEY } from '../constants/global.constants'
 import { ThemeMode } from '../types/global.types'
 
 /**
@@ -46,6 +46,20 @@ export const deleteThemeCookie = async () => {
   try {
     const cookieStore = await cookies()
     cookieStore.delete(THEME_COOKIE_KEY)
+  } catch (error) {
+    console.error('Error deleting theme preference:', error)
+  }
+}
+
+export const getAccountCookie = async () => {
+  try {
+    const cookieStore = await cookies()
+    const account = cookieStore.get(ACCOUNT_COOKIE_KEY)?.value
+    if (!account) {
+      // Return default
+      return null
+    }
+    return account
   } catch (error) {
     console.error('Error deleting theme preference:', error)
   }
