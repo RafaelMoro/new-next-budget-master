@@ -42,7 +42,7 @@ export const forgotPasswordCb = async (payload: ForgotPasswordFormValues): Promi
   }
 }
 
-export const resetPasswordCb = async (payload: ResetPasswordPayload, slug: string): Promise<ResetPasswordData> => {
+export const resetPasswordCb = async (payload: ResetPasswordPayload): Promise<ResetPasswordData> => {
   try {
     const response = await axios.post<ResetPasswordData>(RESET_PASSWORD_API_ENDPOINT, payload)
     const data = response.data
@@ -50,5 +50,4 @@ export const resetPasswordCb = async (payload: ResetPasswordPayload, slug: strin
   } catch (error) {
     throw error
   }
-  // return axios.post(`${uri}/users/reset-password/${slug}`, payload)
 }

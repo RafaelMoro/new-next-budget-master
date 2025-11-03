@@ -29,6 +29,7 @@ export type ResetPasswordFormValues = {
 }
 export type ResetPasswordPayload = {
   password: string
+  slug: string;
 }
 
 export type UserPasswordPayload = {

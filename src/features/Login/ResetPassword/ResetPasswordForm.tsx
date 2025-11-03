@@ -25,7 +25,7 @@ export const ResetPasswordForm = ({ slug, toggleMessageCardState }: ResetPasswor
   })
 
   const { mutate: resetPwdMutation, isError, isPending, isSuccess, isIdle } = useMutation<ResetPasswordData, GeneralApiError, ResetPasswordPayload>({
-    mutationFn: (data) => resetPasswordCb(data, slug),
+    mutationFn: (data) => resetPasswordCb(data),
     onError: () => {
       toggleMessageCardState("error")
     },
@@ -36,7 +36,8 @@ export const ResetPasswordForm = ({ slug, toggleMessageCardState }: ResetPasswor
 
   const onSubmit: SubmitHandler<ResetPasswordFormValues> = (data) => {
     const payload: ResetPasswordPayload = {
-      password: data.password
+      password: data.password,
+      slug,
     }
     resetPwdMutation(payload)
   }
