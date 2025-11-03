@@ -33,3 +33,8 @@ export interface GeneralApiError extends Omit<AxiosError, 'response'> {
 export interface YupError {
   message: string;
 }
+
+export type DetailedError = {
+  message: string;
+  cause?: string;
+}
