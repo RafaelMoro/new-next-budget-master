@@ -13,13 +13,13 @@ export const PasswordResetStatusCard =({ status }: PasswordResetStatusCardProps)
 
   return (
     <Card className="max-w-[400px]">
-      <div className="flex flex-col gap-12">
-        <p className="text-xl text-black dark:text-white text-pretty">
+      <div className="flex flex-col gap-8">
+        <p className="text-2xl font-semibold text-pretty">
           { status === 'success' ?
             "Tu nueva contraseña ya está activa."
             : "Parece que hubo un problema." }
         </p>
-        <p className="text-xl text-black dark:text-white text-pretty">
+        <p className="text-lg text-gray-600 dark:text-gray-400 text-pretty">
           { status === 'success' ?
             "Inicia sesión y sigue conquistando tus finanzas."
             : "Vuelve a iniciar el proceso desde “Olvidé mi contraseña” y lo resolvemos en segundos." }
