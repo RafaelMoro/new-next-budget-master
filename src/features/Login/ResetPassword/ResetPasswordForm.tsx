@@ -1,8 +1,11 @@
 import { LOGIN_ROUTE } from "@/shared/constants/global.constants"
-import { ResetPasswordStatus } from "@/shared/types/login.types";
+import { ResetPasswordFormValues, ResetPasswordPayload, ResetPasswordSchema, ResetPasswordStatus } from "@/shared/types/login.types";
+import { ErrorMessage } from "@/shared/ui/atoms/ErrorMessage";
 import { LinkButton } from "@/shared/ui/atoms/LinkButton"
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Card, Label, TextInput } from "flowbite-react"
 import { AnimatePresence } from "motion/react"
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface ResetPasswordFormProps {
   slug: string;
@@ -10,6 +13,21 @@ interface ResetPasswordFormProps {
 }
 
 export const ResetPasswordForm = ({ slug, toggleMessageCardState }: ResetPasswordFormProps) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ResetPasswordFormValues>({
+    resolver: yupResolver(ResetPasswordSchema)
+  })
+
+  const onSubmit: SubmitHandler<ResetPasswordFormValues> = (data) => {
+    const payload: ResetPasswordPayload = {
+      password: data.password
+    }
+    // resetPwdMutation(payload)
+  }
+
   return (
     <AnimatePresence>
       <Card className="max-w-[400px]">
@@ -17,7 +35,7 @@ export const ResetPasswordForm = ({ slug, toggleMessageCardState }: ResetPasswor
           Ingresa tu nueva contraseña para reestablecer tu contraseña y continuar con el acceso seguro a tu cuenta.
         </p>
         <form
-          // onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex max-w-md flex-col gap-4"
         >
           <div>
@@ -28,11 +46,11 @@ export const ResetPasswordForm = ({ slug, toggleMessageCardState }: ResetPasswor
               data-testid="password"
               id="password"
               type="password"
-              // {...register("password")}
+              {...register("password")}
             />
-            {/* { errors?.password?.message && (
+            { errors?.password?.message && (
               <ErrorMessage isAnimated>{errors.password?.message}</ErrorMessage>
-            )} */}
+            )}
           </div>
           <div>
             <div className="mb-2 block">
@@ -42,11 +60,11 @@ export const ResetPasswordForm = ({ slug, toggleMessageCardState }: ResetPasswor
               data-testid="confirmPassword"
               type="password"
               id="confirmPassword"
-              // {...register("confirmPassword")}
+              {...register("confirmPassword")}
             />
-            {/* { errors?.confirmPassword?.message && (
+            { errors?.confirmPassword?.message && (
               <ErrorMessage isAnimated>{errors.confirmPassword?.message}</ErrorMessage>
-            )} */}
+            )}
           </div>
           <LinkButton className="mt-4" type="secondary" href={LOGIN_ROUTE} >Volver al inicio</LinkButton>
             <Button
