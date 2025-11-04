@@ -1,11 +1,11 @@
 "use client"
 import { Account } from "./Accounts";
 import { useDashboardStore } from "@/zustand/provider/dashboard-store-provider";
-import { useAccountModal } from "@/hooks/useAccountModal";
+import { useAccountModal } from "@/shared/hooks/useAccountModal";
 import { AccountActionsModal } from "./AccountActionsModal";
 
 /**
- * Shows a list of the accounts fetched
+ * Component Description: Shows a list of the accounts fetched
  * @param accounts - Accounts fetched 
  * @returns List of accounts with modal to edit, delete the account clicked
  */

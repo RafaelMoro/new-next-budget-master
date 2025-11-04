@@ -1,8 +1,8 @@
 import { CreateAccountButton } from "../../Accounts/CreateAccountButton";
-import { AccountsView } from "../../Accounts/AccountsView";
+import { AccountsView } from "../../Accounts/AccountsView"
 
 /**
- * Shows the screen of accounts with title, instructions and button to create an account
+ * Component Description: Shows the screen of accounts with title, instructions and button to create an account
  * @param accounts - Accounts fetched 
  * @returns a screen to handle accounts
  */
