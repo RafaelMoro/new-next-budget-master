@@ -12,6 +12,7 @@ import { DashboardScreens } from "@/shared/types/dashboard.types";
 import { useDashboardStore } from "@/zustand/provider/dashboard-store-provider";
 import { saveDashboardScreen } from "@/shared/lib/preferences.lib";
 import { NoAccountsFoundScreen } from "../Accounts/NoAccountsFoundScreen";
+import { SelectAccountDialog } from "../Accounts/SelectAccountDialog";
 
 interface DashboardViewProps {
   accountsFetched: AccountBank[]
@@ -51,7 +52,7 @@ export const Dashboard = ({ detailedError, accountsFetched, recordsFetched }: Da
         {/* { (screen === 'overview' && accounts.length > 0 ) && (<OverviewScreen />) }
         { (screen === 'accounts' && accounts.length > 0 ) && (<AccountScreen />) } */}
         <Toaster position="top-center" />
-        {/* <SelectAccountDialog openModal={openSelectAccountModal} closeModal={toggleSelectAccountModal} /> */}
+        <SelectAccountDialog openModal={openSelectAccountModal} closeModal={toggleSelectAccountModal} />
       </main>
     )
   }
