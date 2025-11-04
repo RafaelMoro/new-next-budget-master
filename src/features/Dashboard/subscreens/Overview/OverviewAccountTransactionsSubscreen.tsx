@@ -6,7 +6,7 @@ import { CurrentMonthAccordionRecords } from "@/features/Records/Accordions/Curr
 import { useAccountModal } from "@/shared/hooks/useAccountModal";
 import { useDashboard } from "@/shared/hooks/useDashboard";
 import { useDashboardStore } from "@/zustand/provider/dashboard-store-provider";
-import { LastMonthAccordion } from "@/features/Records/Accordions/LastMonthAccordion";
+import { LastMonthAccordion } from "@/features/Records/Accordions/LastMonthAccordion"
 import { OlderRecordsAccordion } from "@/features/Records/Accordions/OlderRecordsAccordion";
 
 /**
