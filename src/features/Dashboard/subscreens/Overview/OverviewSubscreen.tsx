@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { OverviewButtonGroup } from "./OverviewButtonGroup"
 import { OverviewScreens } from "@/shared/types/dashboard.types"
 import { OverviewStatisticsSubscreen } from "./OverviewStatisticsSubscreen"
-import { AccountOverviewSubscreen } from "./subscreens/AccountOverviewSubscreen"
+import { OverviewAccountTransactionsSubscreen } from "./OverviewAccountTransactionsSubscreen"
 import { getPreferencesCookie } from "@/shared/lib/preferences.lib"
 import { saveOverviewSubscreenApi } from "@/shared/utils/preferences.utils"
 import { OVERVIEW_SUBSCREEN_KEY } from "@/shared/constants/global.constants"
@@ -34,7 +34,7 @@ export const OverviewScreen = () => {
         screen={subscreen}
       />
       { subscreen === 'statistics' && (<OverviewStatisticsSubscreen />)}
-      { subscreen === 'accountInfo' && (<AccountOverviewSubscreen />)}
+      { subscreen === 'accountInfo' && (<OverviewAccountTransactionsSubscreen />)}
     </main>
   )
 }
