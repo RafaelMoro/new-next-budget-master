@@ -19,3 +19,23 @@ export const saveThemeApi = async (theme: ThemeMode) => {
     console.log('error while saving theme in api', error)
   }
 }
+
+/**
+ * This function calls the API to save the overview subscreen in the cookie for client side components
+ * @param overviewSubscreen - The overview subscreen to save
+ * @returns Promise<void>
+ */
+export const saveOverviewSubscreenApi = async (overviewSubscreen: string) => {
+  try {
+    const res = await fetch('/api/preferences/overview-subscreen', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ overviewSubscreen }),
+    })
+    return res
+  } catch (error) {
+    console.log('error while saving overview subscreen in api', error)
+  }
+}

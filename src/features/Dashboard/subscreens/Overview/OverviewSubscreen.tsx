@@ -4,8 +4,9 @@ import { OverviewButtonGroup } from "./OverviewButtonGroup"
 import { OverviewScreens } from "@/shared/types/dashboard.types"
 import { OverviewStatisticsSubscreen } from "./OverviewStatisticsSubscreen"
 import { AccountOverviewSubscreen } from "./subscreens/AccountOverviewSubscreen"
-import { getOverviewSubscreen } from "@/shared/lib/preferences.lib"
+import { getPreferencesCookie } from "@/shared/lib/preferences.lib"
 import { saveOverviewSubscreenApi } from "@/shared/utils/preferences.utils"
+import { OVERVIEW_SUBSCREEN_KEY } from "@/shared/constants/global.constants"
 
 export const OverviewScreen = () => {
   const [subscreen, setSubscreen] = useState<OverviewScreens | null>(null)
@@ -15,7 +16,7 @@ export const OverviewScreen = () => {
   }
 
   useEffect(() => {
-    getOverviewSubscreen().then((subscr) => {
+    getPreferencesCookie(OVERVIEW_SUBSCREEN_KEY).then((subscr) => {
       if (!subscr) {
         setSubscreen('statistics')
         return
