@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import { OverviewButtonGroup } from "./OverviewButtonGroup"
 import { OverviewScreens } from "@/shared/types/dashboard.types"
-import { StatisticsSubscreen } from "./subscreens/StatisticsSubscreen"
+import { OverviewStatisticsSubscreen } from "./OverviewStatisticsSubscreen"
 import { AccountOverviewSubscreen } from "./subscreens/AccountOverviewSubscreen"
 import { getOverviewSubscreen } from "@/shared/lib/preferences.lib"
 import { saveOverviewSubscreenApi } from "@/shared/utils/preferences.utils"
@@ -32,7 +32,7 @@ export const OverviewScreen = () => {
         updateAccountScreen={() => updateSubscreen('accountInfo')}
         screen={subscreen}
       />
-      { subscreen === 'statistics' && (<StatisticsSubscreen />)}
+      { subscreen === 'statistics' && (<OverviewStatisticsSubscreen />)}
       { subscreen === 'accountInfo' && (<AccountOverviewSubscreen />)}
     </main>
   )
