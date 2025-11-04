@@ -1,11 +1,16 @@
 export const DEFAULT_AMOUNT_VALUE = '$0.00'
 
+// Backend routes
+
 // Routes
 export const LOGIN_ROUTE = '/';
 export const FORGOT_PASSWORD_ROUTE = '/forgot-password';
 export const REGISTER_ROUTE = '/register';
 export const DASHBOARD_ROUTE = '/dashboard';
 export const CREATE_RECORD_ROUTE = '/create-record';
+export const EDIT_EXPENSE_PAGE_ROUTE = '/edit-record/edit-expense'
+export const EDIT_INCOME_PAGE_ROUTE = '/edit-record/edit-income'
+export const EDIT_TRANSFER_PAGE_ROUTE = '/edit-record/edit-transfer'
 
 // API Endpoints
 export const LOGIN_API_ENDPOINT = '/api';
@@ -13,6 +18,8 @@ export const CREATE_USER_API_ENDPOINT = '/api/users/create-user';
 export const FORGOT_PASSWORD_API_ENDPOINT = '/api/users/forgot-password';
 export const RESET_PASSWORD_API_ENDPOINT = '/api/users/reset-password';
 export const ACCOUNT_API_ENDPOINT = 'api/accounts'
+export const EXPENSE_API_ENDPOINT = '/api/records/expense'
+export const INCOME_API_ENDPOINT = '/api/records/income'
 
 // Cookies
 export const THEME_COOKIE_KEY = 'theme-budget-master'

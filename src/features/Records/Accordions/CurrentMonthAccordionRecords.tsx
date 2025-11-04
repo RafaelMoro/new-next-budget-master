@@ -1,7 +1,7 @@
 import { BankMovement } from "@/shared/types/records.types"
 import { Accordion, AccordionContent, AccordionPanel, AccordionTitle, HR } from "flowbite-react"
 import { Fragment } from "react";
-import { RecordEntry } from "../RecordEntry";
+import { RecordEntry } from "../RecordEntry"
 import { RecordsPreviewDrawer } from "../RecordsPreviewDrawer";
 import { useRecordPreview } from "@/shared/hooks/useRecordPreview";
 import { EmptyAccordionResult } from "./EmptyAccordionResult";
