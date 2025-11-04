@@ -14,6 +14,7 @@ import { getDashboardScreen, saveDashboardScreen } from "@/shared/lib/preference
 import { NoAccountsFoundScreen } from "../Accounts/NoAccountsFoundScreen";
 import { SelectAccountDialog } from "../Accounts/SelectAccountDialog";
 import { ERROR_CONNECTION, ERROR_CONNECTION_MESSAGE, GENERAL_ERROR_MESSAGE } from "@/shared/constants/global.constants";
+import { DashboardAside } from "./DashboardAside";
 
 interface DashboardViewProps {
   accountsFetched: AccountBank[]
@@ -92,4 +93,19 @@ export const Dashboard = ({ detailedError, accountsFetched, recordsFetched }: Da
       </main>
     )
   }
+
+  return (
+    <div className="w-full min-h-screen max-w-screen-2xl flex mx-auto my-0">
+      <DashboardAside screen={screen} toggleSelectAccountModal={toggleSelectAccountModal} updateScreen={updateScreen} accounts={accounts}>
+        <HeaderDashboard isMobile={isMobile} />
+      </DashboardAside>
+      { accounts.length === 0 && (
+        <NoAccountsFoundScreen screen={screen} />
+      )}
+      {/* { (screen === 'overview' && accounts.length > 0 ) && (<OverviewScreen />) }
+      { (screen === 'accounts' && accounts.length > 0 ) && (<AccountScreen />) } */}
+      <Toaster position="top-center" />
+      <SelectAccountDialog openModal={openSelectAccountModal} closeModal={toggleSelectAccountModal} />
+    </div>
+  )
 }
