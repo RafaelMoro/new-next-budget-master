@@ -35,7 +35,8 @@ const config: Config = {
   // An array of regexp pattern strings used to skip coverage collection
   coveragePathIgnorePatterns: [
     "/node_modules/",
-    "<rootDir>/src/shared/ui/tremor"
+    "<rootDir>/src/shared/ui/tremor",
+    "<rootDir>/src/shared/ui/icons"
   ],
 
   // Indicates which provider should be used to instrument code for coverage
