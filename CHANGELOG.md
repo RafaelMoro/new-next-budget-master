@@ -1,3 +1,9 @@
+## v0.11.1 (2025-11-04)
+
+### Pull Requests
+[#12](https://github.com/RafaelMoro/new-next-budget-master/pull/12) | Fix dynamic error in sign-out route
+
+
 ## v0.11.0 (2025-11-04)
 
 ### Pull Requests
