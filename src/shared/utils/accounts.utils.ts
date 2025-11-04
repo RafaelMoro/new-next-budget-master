@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import { AccountBank, AccountProvider, AccountTypes, CreateAccountData, CreateAccountPayload } from "../types/accounts.types"
+import { AccountBank, AccountProvider, AccountTypes, CreateAccountData, CreateAccountPayload, DeleteAccountData, DeleteAccountPayload, EditAccountData, EditAccountPayload } from "../types/accounts.types"
 import { formatNumberToCurrency } from "./currency.utils";
-import { CREATE_ACCOUNT_API_ENDPOINT } from "../constants/global.constants";
+import { ACCOUNT_API_ENDPOINT } from "../constants/global.constants";
 
 export function getTerminationFormatted(terminationNumber: number | undefined) {
   if (terminationNumber) {
@@ -37,7 +37,29 @@ export const transformAccountsDisplay = ({ accounts }: { accounts: AccountBank[]
 
 export const createBankAccountCb = async (payload: CreateAccountPayload): Promise<CreateAccountData> => {
   try {
-    const response = await axios.post<CreateAccountData>(CREATE_ACCOUNT_API_ENDPOINT, payload)
+    const response = await axios.post<CreateAccountData>(ACCOUNT_API_ENDPOINT, payload)
+    const data = response.data
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const editBankAccountCb = async (payload: EditAccountPayload): Promise<EditAccountData> => {
+  try {
+    const response = await axios.put<EditAccountData>(ACCOUNT_API_ENDPOINT, payload)
+    const data = response.data
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const deleteBankAccountCb = async (payload: DeleteAccountPayload): Promise<DeleteAccountData> => {
+  try {
+    const response = await axios.delete<DeleteAccountData>(ACCOUNT_API_ENDPOINT, {
+      data: payload,
+    })
     const data = response.data
     return data
   } catch (error) {
