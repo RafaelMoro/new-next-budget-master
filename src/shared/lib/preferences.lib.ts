@@ -1,7 +1,7 @@
 "use server"
 import { cookies } from 'next/headers'
 
-import { ACCOUNT_COOKIE_KEY, DASHBOARD_SCREEN_KEY, OVERVIEW_SUBSCREEN_KEY, THEME_COOKIE_KEY } from '../constants/global.constants'
+import { ACCOUNT_COOKIE_KEY, DASHBOARD_SCREEN_KEY, THEME_COOKIE_KEY } from '../constants/global.constants'
 import { ThemeMode } from '../types/global.types'
 
 /**
@@ -101,29 +101,11 @@ export const getDashboardScreen = async () => {
   }
 }
 
-export const removeAccountCookie = async () => {
+export const removePreferenceCookie = async (cookieKey: string) => {
   try {
     const cookieStore = await cookies()
-    cookieStore.delete(ACCOUNT_COOKIE_KEY)
+    cookieStore.delete(cookieKey)
   } catch (error) {
-    console.log('error deleting account cookie', error)
-  }
-}
-
-export const removeOverviewSubscreen = async () => {
-  try {
-    const cookieStore = await cookies()
-    cookieStore.delete(OVERVIEW_SUBSCREEN_KEY)
-  } catch (error) {
-    console.log('error deleting account cookie', error)
-  }
-}
-
-export const removeDashboardScreen = async () => {
-  try {
-    const cookieStore = await cookies()
-    cookieStore.delete(DASHBOARD_SCREEN_KEY)
-  } catch (error) {
-    console.log('error deleting dashboard screen cookie', error)
+    console.log(`error deleting ${cookieKey} cookie`, error)
   }
 }
