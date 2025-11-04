@@ -1,3 +1,9 @@
+## v0.11.0 (2025-11-04)
+
+### Pull Requests
+[#11](https://github.com/RafaelMoro/new-next-budget-master/pull/11) | Add zustand and dashboard aside mobile and desktop
+
+
 ## v0.10.0 (2025-11-03)
 
 ### Pull Requests
