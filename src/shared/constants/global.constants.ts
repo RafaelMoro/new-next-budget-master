@@ -12,7 +12,7 @@ export const LOGIN_API_ENDPOINT = '/api';
 export const CREATE_USER_API_ENDPOINT = '/api/users/create-user';
 export const FORGOT_PASSWORD_API_ENDPOINT = '/api/users/forgot-password';
 export const RESET_PASSWORD_API_ENDPOINT = '/api/users/reset-password';
-export const CREATE_ACCOUNT_API_ENDPOINT = 'api/accounts'
+export const ACCOUNT_API_ENDPOINT = 'api/accounts'
 
 // Cookies
 export const THEME_COOKIE_KEY = 'theme-budget-master'
