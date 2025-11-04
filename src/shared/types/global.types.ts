@@ -41,6 +41,20 @@ export type DetailedError = {
 
 export const ABBREVIATED_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const;
 export type AbbreviatedMonthsType = typeof ABBREVIATED_MONTHS[number];
+export const abbreviatedMonthsCompleteMonthsDict: Record<CompleteMonthsType, AbbreviatedMonthsType> = {
+  Enero: 'Jan',
+  Febrero: 'Feb',
+  Marzo: 'Mar',
+  Abril: 'Apr',
+  Mayo: 'May',
+  Junio: 'Jun',
+  Julio: 'Jul',
+  Agosto: 'Aug',
+  Septiembre: 'Sep',
+  Octubre: 'Oct',
+  Noviembre: 'Nov',
+  Diciembre: 'Dec',
+}
 
 export const MONTHS = [
   'Enero',
