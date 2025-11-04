@@ -1,8 +1,9 @@
 "use server"
 import { cookies } from 'next/headers'
 import { SignJWT, jwtVerify } from "jose";
-import { SESSION_COOKIE_KEY } from '../constants/global.constants';
+import { ACCOUNT_COOKIE_KEY, DASHBOARD_SCREEN_KEY, OVERVIEW_SUBSCREEN_KEY, SESSION_COOKIE_KEY } from '../constants/global.constants';
 import { JWT_ERROR_VERIFY } from '../constants/login.constants';
+import { deleteThemeCookie, removePreferenceCookie } from './preferences.lib';
 
 export const saveSessionCookie = async (session: string): Promise<void> => {
   try {
@@ -50,4 +51,21 @@ export const getAccessToken = async () => {
     }
     return ''
   }
+}
+
+export const deleteSession = async () => {
+  try {
+    const cookieStore = await cookies()
+    cookieStore.delete(SESSION_COOKIE_KEY)
+  } catch (error) {
+    console.log('error deleting session', error)
+  }
+}
+
+export const signOut = async () => {
+  await deleteSession()
+  await removePreferenceCookie(ACCOUNT_COOKIE_KEY)
+  await removePreferenceCookie(OVERVIEW_SUBSCREEN_KEY)
+  await removePreferenceCookie(DASHBOARD_SCREEN_KEY)
+  await deleteThemeCookie()
 }

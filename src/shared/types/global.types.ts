@@ -33,3 +33,27 @@ export interface GeneralApiError extends Omit<AxiosError, 'response'> {
 export interface YupError {
   message: string;
 }
+
+export type DetailedError = {
+  message: string;
+  cause?: string;
+}
+
+export const ABBREVIATED_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const;
+export type AbbreviatedMonthsType = typeof ABBREVIATED_MONTHS[number];
+
+export const MONTHS = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
+] as const;
+export type CompleteMonthsType = typeof MONTHS[number];

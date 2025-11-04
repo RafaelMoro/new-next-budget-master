@@ -1,0 +1,25 @@
+"use client"
+
+export const useMediaQuery = () => {
+  if (typeof window === 'undefined' || !window.matchMedia) {
+    return {
+      isMobile: false,
+      isTablet: false,
+      isTabletDesktop: false,
+      isMobileTablet: false,
+      isDesktop: false,
+      isDesktopX2: false
+    }
+  }
+
+  const mq = (q: string) => window.matchMedia(q).matches
+
+  return {
+    isMobile: mq('(max-width: 767px)'),
+    isTablet: mq('(min-width: 768px) and (max-width: 1023px)'),
+    isTabletDesktop: mq('(min-width: 768px)'),
+    isMobileTablet: mq('(max-width: 1023px)'),
+    isDesktop: mq('(min-width: 1024px)'),
+    isDesktopX2: mq('(min-width: 1280px)')
+  }
+}
