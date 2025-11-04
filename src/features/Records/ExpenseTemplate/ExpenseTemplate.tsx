@@ -27,7 +27,7 @@ import { TransactionCategorizerDropdown } from "../../Categories/TransactionCate
 import { ManageTagsModal } from "../ManageTagsModal"
 import { useManageTags } from "@/shared/hooks/useManageTags"
 import { useIndebtedPeople } from "@/shared/hooks/useIndebtedPeople"
-import { FurtherDetailsAccordeon } from "../FurtherDetailsAccordeon"
+import { FurtherDetailsAccordion } from "../FurtherDetailsAccordion"
 import { useMediaQuery } from "@/shared/hooks/useMediaQuery"
 import { PersonalDebtManager } from "../../IndebtedPeople/PersonalDebtManager"
 import { CREDIT_ACCOUNT_TYPE } from "@/shared/types/accounts.types"
@@ -288,7 +288,7 @@ export const ExpenseTemplate = ({
           ) }
           { isCredit && (<ToggleSwitch data-testid="toggle-switch-is-paid" checked={isPaid} label="Pagado" onChange={toggleDebtPaid} />) }
           { isMobileTablet && (
-            <FurtherDetailsAccordeon>
+            <FurtherDetailsAccordion>
               <div className="w-full flex flex-col gap-12">
                 <ManageTagsModal tags={tags.current} updateTags={updateTags} openModal={openTagModal} openModalFn={openModal} closeModalFn={closeModal} />
                 <PersonalDebtManager
@@ -303,7 +303,7 @@ export const ExpenseTemplate = ({
                   removePerson={removePerson}
                 />
               </div>
-            </FurtherDetailsAccordeon>
+            </FurtherDetailsAccordion>
           )}
           <div className="w-full flex flex-col lg:flex-row lg:justify-between gap-4">
             <CancelButtonExpenseTemplate action={editRecord?.shortName ? "edit" : "create"} />
