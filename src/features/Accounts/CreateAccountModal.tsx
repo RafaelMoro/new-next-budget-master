@@ -14,9 +14,9 @@ import { AccountProviderDropdown } from "./AccountProviderDropdown"
 import { AccountFormData, AccountFormSchema, AccountProvider, AccountTypes, CreateAccountData, CreateAccountPayload, OperationAccountError } from "@/shared/types/accounts.types"
 import { ErrorMessage } from "@/shared/ui/atoms/ErrorMessage";
 import { cleanCurrencyString } from "@/shared/utils/currency.utils"
-import { createBankAccountCb } from "@/shared/lib/accounts.lib";
+import { createBankAccountCb } from "@/shared/utils/accounts.utils"
 import { ACCOUNT_CREATE_ERROR } from "@/shared/constants/accounts.constants";
-import { getRandomFourDigitString } from "@/shared/utils/general.utils"
+import { getRandomFourDigitString } from "@/shared/utils/global.utils"
 
 interface CreateAccountProps {
   closeModal: () => void;

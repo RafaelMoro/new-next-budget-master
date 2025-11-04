@@ -1,5 +1,8 @@
-import { AccountBank, AccountProvider, AccountTypes } from "../types/accounts.types"
+import axios from "axios";
+
+import { AccountBank, AccountProvider, AccountTypes, CreateAccountData, CreateAccountPayload } from "../types/accounts.types"
 import { formatNumberToCurrency } from "./currency.utils";
+import { CREATE_ACCOUNT_API_ENDPOINT } from "../constants/global.constants";
 
 export function getTerminationFormatted(terminationNumber: number | undefined) {
   if (terminationNumber) {
@@ -30,4 +33,14 @@ export const transformAccountsDisplay = ({ accounts }: { accounts: AccountBank[]
     terminationFourDigitsTransformed: getTerminationFormatted(account.terminationFourDigits),
     accountProvider: getAccountProvider(account.accountProvider) // Default to mastercard if not provided
   }))
+}
+
+export const createBankAccountCb = async (payload: CreateAccountPayload): Promise<CreateAccountData> => {
+  try {
+    const response = await axios.post<CreateAccountData>(CREATE_ACCOUNT_API_ENDPOINT, payload)
+    const data = response.data
+    return data
+  } catch (error) {
+    throw error
+  }
 }

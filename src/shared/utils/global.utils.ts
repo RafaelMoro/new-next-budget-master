@@ -19,3 +19,8 @@ export const createYearsArray = (currentYear: string): string[] => {
 
   return years;
 };
+
+export const getRandomFourDigitString = (): string => {
+  const randomNumber = Math.floor(Math.random() * 10000);
+  return randomNumber.toString().padStart(4, '0');
+};
