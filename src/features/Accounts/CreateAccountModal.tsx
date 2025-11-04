@@ -13,7 +13,7 @@ import { AccountTypeDropdown } from "./AccountTypeDropdown"
 import { AccountProviderDropdown } from "./AccountProviderDropdown"
 import { AccountFormData, AccountFormSchema, AccountProvider, AccountTypes, CreateAccountData, CreateAccountPayload, OperationAccountError } from "@/shared/types/accounts.types"
 import { ErrorMessage } from "@/shared/ui/atoms/ErrorMessage";
-import { cleanCurrencyString } from "@/shared/utils/formatNumberCurrency.utils";
+import { cleanCurrencyString } from "@/shared/utils/currency.utils"
 import { createBankAccountCb } from "@/shared/lib/accounts.lib";
 import { ACCOUNT_CREATE_ERROR } from "@/shared/constants/accounts.constants";
 import { getRandomFourDigitString } from "@/shared/utils/general.utils"
