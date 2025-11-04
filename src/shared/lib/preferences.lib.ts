@@ -109,3 +109,17 @@ export const removePreferenceCookie = async (cookieKey: string) => {
     console.log(`error deleting ${cookieKey} cookie`, error)
   }
 }
+
+export const getPreferencesCookie = async (cookie: string) => {
+  try {
+    const cookieStore = await cookies()
+    const cookieValue = cookieStore.get(cookie)?.value
+    if (!cookieValue) {
+      // Return default
+      return null
+    }
+    return cookieValue
+  } catch (error) {
+    console.error(`Error getting ${cookie} preference:`, error)
+  }
+}
