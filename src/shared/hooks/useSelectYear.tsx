@@ -6,7 +6,7 @@ interface UseSelectYearProps {
 }
 
 /**
-* It's to select year for the dropdown SelectYearDropdown
+* Hook description: Used to select the year for the dropdown SelectYearDropdown
 */
 export const useSelectYear = ({ isOlderRecords = false }: UseSelectYearProps) => {
   const [selectedYear, setSelectedYear] = useState<string | null>(null)

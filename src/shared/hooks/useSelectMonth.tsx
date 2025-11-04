@@ -7,7 +7,7 @@ interface UseSelectMonthProps {
 }
 
 /**
-* It's to select month for the dropdown SelectMonthDropdown
+* Hook description: Used to select the month for the dropdown SelectMonthDropdown
 */
 export const useSelectMonth = ({ isOlderRecords = false }: UseSelectMonthProps) => {
   const [selectedMonth, setSelectedMonth] = useState<CompleteMonthsType | null>(null)
