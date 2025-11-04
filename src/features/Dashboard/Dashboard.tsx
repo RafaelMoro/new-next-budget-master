@@ -10,9 +10,10 @@ import { HeaderDashboard } from "@/shared/ui/organisms/HeaderDashboard";
 import { HeaderMenuMobile } from "@/shared/ui/organisms/HeaderMenuMobile";
 import { DashboardScreens } from "@/shared/types/dashboard.types";
 import { useDashboardStore } from "@/zustand/provider/dashboard-store-provider";
-import { saveDashboardScreen } from "@/shared/lib/preferences.lib";
+import { getDashboardScreen, saveDashboardScreen } from "@/shared/lib/preferences.lib";
 import { NoAccountsFoundScreen } from "../Accounts/NoAccountsFoundScreen";
 import { SelectAccountDialog } from "../Accounts/SelectAccountDialog";
+import { ERROR_CONNECTION, ERROR_CONNECTION_MESSAGE, GENERAL_ERROR_MESSAGE } from "@/shared/constants/global.constants";
 
 interface DashboardViewProps {
   accountsFetched: AccountBank[]
@@ -38,7 +39,42 @@ export const Dashboard = ({ detailedError, accountsFetched, recordsFetched }: Da
     await saveDashboardScreen(newScreen)
     setScreen(newScreen)
   }
+
+  useEffect(() => {
+    getDashboardScreen().then((screen) => {
+      if (!screen) {
+        setScreen('overview')
+        return
+      }
+      setScreen(screen as DashboardScreens)
+    })
+  }, [])
+
+  // If the router has been refreshed, update zustand store of records
+  useEffect(() => {
+    updateRecords(recordsFetched)
+  }, [recordsFetched, updateRecords])
+
   const toggleSelectAccountModal = () => setOpenSelectAccountModal((prev) => !prev)
+
+  useEffect(() => {
+    if (detailedError?.cause === ERROR_CONNECTION) {
+      toast.error(ERROR_CONNECTION_MESSAGE);
+    } else if (detailedError?.message) {
+      toast.error(GENERAL_ERROR_MESSAGE);
+    }
+  }, [detailedError?.cause, detailedError?.message])
+
+  useEffect(() => {
+    if (accounts.length !== accountsFetched.length) {
+      const [firstAccount = null] = accountsFetched;
+      if (firstAccount) {
+        updateSelectedAccount(firstAccount)
+      }
+    }
+    updateAccounts(accountsFetched)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountsFetched])
 
   if (isMobile) {
     return (

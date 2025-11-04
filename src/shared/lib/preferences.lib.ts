@@ -82,3 +82,21 @@ export const saveDashboardScreen = async (dashboardScreen: string): Promise<void
     console.error('Error saving dashboard preference:', error)
   }
 }
+
+/**
+ * This function gets the value of the dashboard screen in the cookie.
+ * @returns string or null if not found
+ */
+export const getDashboardScreen = async () => {
+  try {
+    const cookieStore = await cookies()
+    const dashboardScreen = cookieStore.get(DASHBOARD_SCREEN_KEY)?.value
+    if (!dashboardScreen) {
+      // Return default
+      return null
+    }
+    return dashboardScreen
+  } catch (error) {
+    console.error('Error getting dashboard screen preference:', error)
+  }
+}

@@ -21,8 +21,12 @@ export const SESSION_COOKIE_KEY = 'session-budget-master'
 export const ACCOUNT_COOKIE_KEY = 'ftk_sba'
 export const DASHBOARD_SCREEN_KEY = 'dashboard_screen'
 
-// Errors
+// Errors from backend
+export const ERROR_CONNECTION = 'ECONNREFUSED'
+
+// Errors to show in the UI
 export const GENERAL_ERROR_MESSAGE = 'Oops! Algo no salió como esperabamos.';
+export const ERROR_CONNECTION_MESSAGE = 'Hubo un error con tu red. Revisa tu conexión a internet e intenta nuevamente.'
 
 // Tags
 export const LAST_MONTH_RECORDS_TAG = 'last-month-records'
