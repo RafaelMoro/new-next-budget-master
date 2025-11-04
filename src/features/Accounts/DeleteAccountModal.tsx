@@ -15,6 +15,9 @@ interface DeleteAccountProps {
   updateAccAction: (acc: AccountModalAction) => void;
 }
 
+/**
+ * Component Description: It shows the delete screen to delete an account in the modal in AccountActionsModal
+ */
 export const DeleteAccountModal = ({ account, closeModal, updateAccAction }: DeleteAccountProps) => {
   const router = useRouter()
 

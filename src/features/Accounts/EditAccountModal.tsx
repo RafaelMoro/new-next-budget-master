@@ -26,6 +26,9 @@ interface EditAccountProps {
   updateAccAction: (acc: AccountModalAction) => void;
 }
 
+/**
+ * Component Description: It shows the edit screen to edit an account in the modal in AccountActionsModal
+ */
 export const EditAccountModal = ({ account, closeModal, updateAccAction }: EditAccountProps) => {
   const router = useRouter()
   const [selectedAccountType, setSelectedAccountType] = useState<AccountTypes>(account.type)

@@ -12,6 +12,9 @@ interface AccountActionsModalProps {
   updateAccAction: (acc: AccountModalAction) => void
 }
 
+/**
+ * Component Description: It shows a modal to view, edit or delete an account depending on the action selected
+ */
 export const AccountActionsModal = ({
   accDetails, closeModal, openAccModal, accAction, updateAccAction
 }: AccountActionsModalProps) => {

@@ -8,6 +8,9 @@ interface AccountDetailsProps {
   updateAccAction: (acc: AccountModalAction) => void
 }
 
+/**
+ * Component Description: It shows the view screen to see account details in the modal in AccountActionsModal
+ */
 export const AccountDetailsModal = ({ account, updateAccAction }: AccountDetailsProps) => {
   return (
     <>
