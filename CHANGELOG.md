@@ -1,3 +1,9 @@
+## v0.12.0 (2025-11-04)
+
+### Pull Requests
+[#13](https://github.com/RafaelMoro/new-next-budget-master/pull/13) | Add account subscreen dashboard
+
+
 ## v0.11.1 (2025-11-04)
 
 ### Pull Requests
