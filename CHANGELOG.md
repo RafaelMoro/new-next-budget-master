@@ -1,3 +1,9 @@
+## v0.13.0 (2025-11-04)
+
+### Pull Requests
+[#14](https://github.com/RafaelMoro/new-next-budget-master/pull/14) | Add overview accounts transaction subscreen
+
+
 ## v0.12.0 (2025-11-04)
 
 ### Pull Requests
