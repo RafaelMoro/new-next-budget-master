@@ -2,7 +2,7 @@ import { AccountModalAction, AccountsDisplay } from "@/shared/types/accounts.typ
 import { Modal } from "flowbite-react"
 import { AccountDetailsModal } from "./AccountDetailsModal"
 import { EditAccountModal } from "./EditAccountModal"
-import { DeleteAccount } from "./DeleteAccount"
+import { DeleteAccountModal } from "./DeleteAccountModal"
 
 interface AccountDialogProps {
   accDetails: AccountsDisplay | null
@@ -33,7 +33,7 @@ export const AccountDialog = ({
       )}
 
       { accAction === 'delete' && (
-        <DeleteAccount
+        <DeleteAccountModal
           account={accDetails}
           closeModal={closeModal}
           updateAccAction={updateAccAction}
