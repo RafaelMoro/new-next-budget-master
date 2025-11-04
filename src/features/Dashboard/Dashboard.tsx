@@ -11,6 +11,7 @@ import { HeaderMenuMobile } from "@/shared/ui/organisms/HeaderMenuMobile";
 import { DashboardScreens } from "@/shared/types/dashboard.types";
 import { useDashboardStore } from "@/zustand/provider/dashboard-store-provider";
 import { saveDashboardScreen } from "@/shared/lib/preferences.lib";
+import { NoAccountsFoundScreen } from "../Accounts/NoAccountsFoundScreen";
 
 interface DashboardViewProps {
   accountsFetched: AccountBank[]
@@ -44,13 +45,13 @@ export const Dashboard = ({ detailedError, accountsFetched, recordsFetched }: Da
         <HeaderDashboard isMobile>
           <HeaderMenuMobile screen={screen} accounts={accounts} updateScreen={updateScreen} toggleSelectAccountModal={toggleSelectAccountModal} />
         </HeaderDashboard>
-        {/* { accounts.length === 0 && (
+        { accounts.length === 0 && (
           <NoAccountsFoundScreen screen={screen} />
         )}
-        { (screen === 'overview' && accounts.length > 0 ) && (<OverviewScreen />) }
-        { (screen === 'accounts' && accounts.length > 0 ) && (<AccountScreen />) }
+        {/* { (screen === 'overview' && accounts.length > 0 ) && (<OverviewScreen />) }
+        { (screen === 'accounts' && accounts.length > 0 ) && (<AccountScreen />) } */}
         <Toaster position="top-center" />
-        <SelectAccountDialog openModal={openSelectAccountModal} closeModal={toggleSelectAccountModal} /> */}
+        {/* <SelectAccountDialog openModal={openSelectAccountModal} closeModal={toggleSelectAccountModal} /> */}
       </main>
     )
   }
