@@ -2,7 +2,7 @@
 import { Account } from "./Accounts";
 import { useDashboardStore } from "@/zustand/provider/dashboard-store-provider";
 import { useAccountModal } from "@/hooks/useAccountModal";
-import { AccountDialog } from "./AccountDialog";
+import { AccountActionsModal } from "./AccountActionsModal";
 
 /**
  * Shows a list of the accounts fetched
@@ -35,7 +35,7 @@ export const AccountsView = () => {
           openModal={openModal}
         />
       )) }
-      <AccountDialog
+      <AccountActionsModal
         accDetails={accDetails}
         openAccModal={openAccModal}
         accAction={accAction}

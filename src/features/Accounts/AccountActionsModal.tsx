@@ -4,7 +4,7 @@ import { AccountDetailsModal } from "./AccountDetailsModal"
 import { EditAccountModal } from "./EditAccountModal"
 import { DeleteAccountModal } from "./DeleteAccountModal"
 
-interface AccountDialogProps {
+interface AccountActionsModalProps {
   accDetails: AccountsDisplay | null
   openAccModal: boolean
   accAction: AccountModalAction | null
@@ -12,9 +12,9 @@ interface AccountDialogProps {
   updateAccAction: (acc: AccountModalAction) => void
 }
 
-export const AccountDialog = ({
+export const AccountActionsModal = ({
   accDetails, closeModal, openAccModal, accAction, updateAccAction
-}: AccountDialogProps) => {
+}: AccountActionsModalProps) => {
   if (accDetails) {
     return (
       <Modal show={openAccModal} onClose={closeModal}>
