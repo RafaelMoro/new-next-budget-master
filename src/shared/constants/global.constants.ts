@@ -39,3 +39,4 @@ export const ERROR_CONNECTION_MESSAGE = 'Hubo un error con tu red. Revisa tu con
 
 // Tags
 export const LAST_MONTH_RECORDS_TAG = 'last-month-records'
+export const OLDER_RECORDS_TAG = 'older-records'

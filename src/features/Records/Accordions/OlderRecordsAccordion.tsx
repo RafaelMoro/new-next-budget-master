@@ -13,7 +13,7 @@ import { useSelectMonth } from "@/shared/hooks/useSelectMonth"
 import { useSelectYear } from "@/shared/hooks/useSelectYear"
 import { GetRecordsResponse } from "@/shared/types/records.types";
 import { useDashboardStore } from "@/zustand/provider/dashboard-store-provider";
-import { OLDER_RECORDS_TAG } from "@/shared/constants/Global.constants";
+import { OLDER_RECORDS_TAG } from "@/shared/constants/global.constants"
 import { RecordEntrySkeleton } from "../RecordEntrySkeleton";
 import { RecordEntry } from "../RecordEntry";
 import { getDateInfo } from "@/shared/utils/getDateInfo";
