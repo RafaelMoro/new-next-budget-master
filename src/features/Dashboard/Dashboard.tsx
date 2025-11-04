@@ -16,6 +16,7 @@ import { SelectAccountDialog } from "../Accounts/SelectAccountDialog";
 import { ERROR_CONNECTION, ERROR_CONNECTION_MESSAGE, GENERAL_ERROR_MESSAGE } from "@/shared/constants/global.constants";
 import { DashboardAside } from "./DashboardAside";
 import { AccountSubscreen } from "./subscreens/AccountSubscreen";
+import { OverviewScreen } from "./subscreens/Overview/OverviewSubscreen";
 
 interface DashboardViewProps {
   accountsFetched: AccountBank[]
@@ -87,7 +88,7 @@ export const Dashboard = ({ detailedError, accountsFetched, recordsFetched }: Da
         { accounts.length === 0 && (
           <NoAccountsFoundScreen screen={screen} />
         )}
-        {/* { (screen === 'overview' && accounts.length > 0 ) && (<OverviewScreen />) } */}
+        { (screen === 'overview' && accounts.length > 0 ) && (<OverviewScreen />) }
         { (screen === 'accounts' && accounts.length > 0 ) && (<AccountSubscreen />) }
         <Toaster position="top-center" />
         <SelectAccountDialog openModal={openSelectAccountModal} closeModal={toggleSelectAccountModal} />
@@ -103,7 +104,7 @@ export const Dashboard = ({ detailedError, accountsFetched, recordsFetched }: Da
       { accounts.length === 0 && (
         <NoAccountsFoundScreen screen={screen} />
       )}
-      {/* { (screen === 'overview' && accounts.length > 0 ) && (<OverviewScreen />) } */}
+      { (screen === 'overview' && accounts.length > 0 ) && (<OverviewScreen />) }
       { (screen === 'accounts' && accounts.length > 0 ) && (<AccountSubscreen />) }
       <Toaster position="top-center" />
       <SelectAccountDialog openModal={openSelectAccountModal} closeModal={toggleSelectAccountModal} />

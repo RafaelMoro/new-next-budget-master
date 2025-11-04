@@ -62,7 +62,7 @@ export const fetchRecordsCurrentMonth = async ({ accountId }: { accountId: strin
     if (!accountId) {
       return getRecordsCurrentMonthError('Account ID is required to fetch records for the current month');
     }
-    const uri = process.env.NEXT_PUBLIC_BACKEND_URI
+    const uri = process.env.BACKEND_URI
     if (!uri) {
       return getRecordsCurrentMonthError('Backend URI is not defined');
     }
