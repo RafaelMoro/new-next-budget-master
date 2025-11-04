@@ -12,3 +12,6 @@ export const RESET_PASSWORD_META_DESCRIPTION = 'Restablece tu contraseña de Bud
 
 export const DASHBOARD_META_TITLE = ' Budget Master | Panel de administración';
 export const DASHBOARD_META_DESCRIPTION = 'Bienvenido al best personal expense tracker app. Desde este panel de administración organiza tus finanzas y analiza gastos con facilidad. ¡Accede ahora!';
+
+export const CREATE_RECORD_META_TITLE = 'Budget Master | Registrar movimiento';
+export const CREATE_RECORD_META_DESCRIPTION = 'Registra tus gastos, transferencias e ingresos con Budget Master. Controla tus gastos y ahorros desde un solo lugar.';
