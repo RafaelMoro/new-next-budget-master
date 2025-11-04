@@ -1,5 +1,5 @@
 import { AccountBank, AccountProvider, AccountTypes } from "../types/accounts.types"
-import { formatNumberToCurrency } from "./global.utils";
+import { formatNumberToCurrency } from "./currency.utils";
 
 export function getTerminationFormatted(terminationNumber: number | undefined) {
   if (terminationNumber) {

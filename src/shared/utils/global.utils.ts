@@ -5,14 +5,6 @@ export const handleErrorForm = (error: unknown): YupError => {
   return newError
 }
 
-const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  minimumFractionDigits: 2,
-});
-export const formatNumberToCurrency = (amount: number): string =>
-  formatter.format(amount);
-
 export const createYearsArray = (currentYear: string): string[] => {
   const END_YEAR = Number(currentYear);
   const START_YEAR = 2022;

@@ -1,3 +1,5 @@
+export const DEFAULT_AMOUNT_VALUE = '$0.00'
+
 // Routes
 export const LOGIN_ROUTE = '/';
 export const FORGOT_PASSWORD_ROUTE = '/forgot-password';
