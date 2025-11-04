@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { SignJWT, jwtVerify } from "jose";
 import { SESSION_COOKIE_KEY } from '../constants/global.constants';
 import { JWT_ERROR_VERIFY } from '../constants/login.constants';
+import { removeAccountCookie, removeDashboardScreen, removeOverviewSubscreen } from './preferences.lib';
 
 export const saveSessionCookie = async (session: string): Promise<void> => {
   try {
@@ -50,4 +51,21 @@ export const getAccessToken = async () => {
     }
     return ''
   }
+}
+
+export const deleteSession = async () => {
+  try {
+    const cookieStore = await cookies()
+    cookieStore.delete(SESSION_COOKIE_KEY)
+  } catch (error) {
+    console.log('error deleting session', error)
+  }
+}
+
+export const signOut = async () => {
+  await deleteSession()
+  await removeAccountCookie()
+  await removeOverviewSubscreen()
+  await removeDashboardScreen()
+  await deleteThemeCookie()
 }

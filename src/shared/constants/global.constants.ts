@@ -20,6 +20,7 @@ export const SESSION_COOKIE_KEY = 'session-budget-master'
   // Stands for fintrack selected bank account
 export const ACCOUNT_COOKIE_KEY = 'ftk_sba'
 export const DASHBOARD_SCREEN_KEY = 'dashboard_screen'
+export const OVERVIEW_SUBSCREEN_KEY = 'overview_subscreen'
 
 // Errors from backend
 export const ERROR_CONNECTION = 'ECONNREFUSED'
