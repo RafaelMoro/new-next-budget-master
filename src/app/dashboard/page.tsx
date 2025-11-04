@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 
 import { DASHBOARD_META_DESCRIPTION, DASHBOARD_META_TITLE } from "@/shared/constants/metadata.constants"
 import { getAccessToken } from "@/shared/lib/auth.lib";
-import { fetchAccounts } from "@/shared/lib/dashboard.lib";
+import { fetchAccounts, fetchRecordsCurrentMonth } from "@/shared/lib/dashboard.lib";
 import { getAccountCookie } from "@/shared/lib/preferences.lib";
 import { DashboardStoreProvider } from "@/zustand/provider/dashboard-store-provider";
 import { LoginRequiredModal } from "@/shared/ui/organisms/LoginRequiredModal";
+import { Dashboard } from "@/features/Dashboard/Dashboard";
 
 export const metadata: Metadata = {
   title: DASHBOARD_META_TITLE,
@@ -23,12 +24,12 @@ export default async function DashboardPage() {
     getAccountCookie()
   ])
   const selectedAccount = selectedAccountCookie ?? accounts[0]?._id ?? null;
+  const { records } = await fetchRecordsCurrentMonth({ accountId: selectedAccount });
 
-  // TODO: Change the fetch of records
   return (
-    <DashboardStoreProvider records={[]} accounts={accounts} selectedAccountId={selectedAccount}>
+    <DashboardStoreProvider records={records} accounts={accounts} selectedAccountId={selectedAccount}>
       <LoginRequiredModal accessToken={accessToken} />
-      <h1>Dashboard</h1>
+      <Dashboard detailedError={detailedError} accountsFetched={accounts} recordsFetched={records} />
     </DashboardStoreProvider>
   )
 }
