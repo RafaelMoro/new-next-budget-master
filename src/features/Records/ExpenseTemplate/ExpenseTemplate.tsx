@@ -19,7 +19,7 @@ import { Category, CategoryShown } from "@/shared/types/categories.types"
 import { cleanCurrencyString } from "@/shared/utils/currency.utils"
 import { createExpenseCb, editExpenseCb, resetEditRecordLS } from "@/shared/utils/records.utils"
 import { DASHBOARD_ROUTE } from "@/shared/constants/global.constants"
-import { DetailedError, GeneralError, SelectedAccountLS } from "@/shared/types/global.types"
+import { DetailedError, GeneralError } from "@/shared/types/global.types"
 import { ErrorMessage } from "@/shared/ui/atoms/ErrorMessage"
 import { CREATE_EXPENSE_INCOME_ERROR, EDIT_EXPENSE_INCOME_ERROR } from "@/shared/constants/records.constants"
 import { CATEGORY_FETCH_ERROR, CATEGORY_REQUIRED, SUBCATEGORY_REQUIRED } from "@/shared/constants/categories.constants"
@@ -30,7 +30,7 @@ import { useIndebtedPeople } from "@/shared/hooks/useIndebtedPeople"
 import { FurtherDetailsAccordion } from "../FurtherDetailsAccordion"
 import { useMediaQuery } from "@/shared/hooks/useMediaQuery"
 import { PersonalDebtManager } from "../IndebtedPeople/PersonalDebtManager"
-import { CREDIT_ACCOUNT_TYPE } from "@/shared/types/accounts.types"
+import { AccountsDisplay, CREDIT_ACCOUNT_TYPE } from "@/shared/types/accounts.types"
 import { Budget, SelectBudget } from "@/shared/types/budgets.types"
 import { useHandleBudgets } from "@/shared/hooks/useHandleBudgets"
 import { SelectBudgetDropdown } from "@/features/Budgets/SelectBudget"
@@ -40,8 +40,7 @@ import { CancelButtonExpenseTemplate } from "./CancelButtonExpenseTemplate"
 interface ExpenseTemplateProps {
   categories: Category[]
   budgetsFetched: Budget[]
-  selectedAccount: string | null
-  selectedAccLS: SelectedAccountLS | null
+  selectedAccount: AccountsDisplay | null
   editRecord: BankMovement | null
   accessToken: string
   detailedErrorCategories: DetailedError | null
@@ -55,7 +54,6 @@ export const ExpenseTemplate = ({
   accessToken,
   detailedErrorCategories,
   detailedErrorBudgets,
-  selectedAccLS,
   editRecord
 }: ExpenseTemplateProps) => {
   const router = useRouter()
@@ -64,7 +62,7 @@ export const ExpenseTemplate = ({
   const [date, setDate] = useState<Date | undefined>(new Date())
   const [isPaid, setIsPaid] = useState<boolean>(false)
   const toggleDebtPaid = () => setIsPaid((prev) => !prev)
-  const isCredit = selectedAccLS?.accountType === CREDIT_ACCOUNT_TYPE
+  const isCredit = selectedAccount?.type === CREDIT_ACCOUNT_TYPE
   const buttonText = editRecord?.shortName ? 'Editar gasto' : 'Crear gasto'
 
   const { tags, updateTags, openTagModal, closeModal, openModal } = useManageTags()

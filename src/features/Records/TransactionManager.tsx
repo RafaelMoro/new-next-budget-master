@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { RiArrowLeftLine } from "@remixicon/react"
 
 import { TransactionManagerGroupButton } from "./TransactionManagerGroupButton"
@@ -10,13 +10,14 @@ import { LinkButton } from "@/shared/ui/atoms/LinkButton"
 import { DASHBOARD_ROUTE } from "@/shared/constants/global.constants"
 import { ExpenseTemplate } from "./ExpenseTemplate/ExpenseTemplate";
 import { GetBudgetsResponse } from "@/shared/types/budgets.types"
+import { AccountsDisplay } from "@/shared/types/accounts.types"
 // import { IncomeTemplate } from "./IncomeTemplate"
 // import { TransferTemplate } from "./TransferTemplate"
 
 interface TransactionManagerProps {
   resCategories: GetCategoriesResponse
   resBudgets: GetBudgetsResponse
-  selectedAccount: string | null
+  selectedAccount: AccountsDisplay | null
   accessToken: string
 }
 
@@ -59,7 +60,6 @@ export const TransactionManager = ({ resCategories, resBudgets, selectedAccount,
             accessToken={accessToken}
             detailedErrorCategories={errorCategories}
             detailedErrorBudgets={errorBudgets}
-            selectedAccLS={selectedAccLS}
             editRecord={null}
           />
         )}

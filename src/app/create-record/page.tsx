@@ -25,7 +25,6 @@ export default async function CreateRecordPage() {
       fetchCategories(),
       fetchAllBudgets()
     ])
-  const selectedAccount = selectedAccountCookie ?? null;
 
   return (
     <>
@@ -33,7 +32,7 @@ export default async function CreateRecordPage() {
       <TransactionManager
         resCategories={resCategories}
         resBudgets={resBudgets}
-        selectedAccount={selectedAccount}
+        selectedAccount={selectedAccountCookie}
         accessToken={accessToken}
       />
     </>
