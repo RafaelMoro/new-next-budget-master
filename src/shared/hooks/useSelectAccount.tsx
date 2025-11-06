@@ -34,7 +34,7 @@ export const useSelectAccount = ({ limit10Accounts = false, closeModal }: Select
     }
     const newOptions = accountsDisplay.filter(acc => acc.accountId !== accountId)
     // Save the account selected into the cookie
-    await saveAccountApi(selectedAccDisplay.accountId)
+    await saveAccountApi(selectedAccDisplay)
     setAccountsOptions(newOptions)
     // This updates select account display and selected account
     updateSelectedAccount(selectedAcc)

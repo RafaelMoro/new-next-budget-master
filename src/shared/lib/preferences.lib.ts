@@ -123,3 +123,16 @@ export const getPreferencesCookie = async (cookie: string) => {
     console.error(`Error getting ${cookie} preference:`, error)
   }
 }
+
+export const savePreferenceCookie = async ({ cookieKey, cookieValue }: { cookieKey: string, cookieValue: string }) => {
+  try {
+    const cookieStore = await cookies()
+    cookieStore.set(cookieKey, cookieValue, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    })
+  } catch (error) {
+    console.error(`Error saving cookie ${cookieKey}:`, error)
+  }
+}
