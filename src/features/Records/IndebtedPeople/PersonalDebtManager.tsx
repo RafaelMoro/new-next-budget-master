@@ -3,7 +3,7 @@ import { IndebtedPeopleSection } from "./IndebtedPeopleSection"
 import { IndebtedPeopleModal } from "./IndebtedPeopleModal"
 import { ShowIndebtedPeople } from "./ShowIndebtedPeople"
 
-interface IndebtedPeopleProps {
+interface PersonalDebtManagerProps {
   indebtedPeople: IndebtedPeopleUI[]
   openModal: boolean
   toggleModal: () => void
@@ -29,7 +29,7 @@ export const PersonalDebtManager = ({
   updateIndebtedPerson,
   validatePersonExist,
   removePerson,
-}: IndebtedPeopleProps) => {
+}: PersonalDebtManagerProps) => {
   return (
     <IndebtedPeopleSection
       indebtedPeople={indebtedPeople}
