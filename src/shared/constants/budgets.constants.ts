@@ -1,0 +1,1 @@
+export const BUDGETS_FETCH_ERROR = 'Error al cargar los presupuestos. Por favor, inténtalo más tarde.'
