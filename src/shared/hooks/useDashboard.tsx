@@ -23,7 +23,7 @@ export const useDashboard = () => {
     try {
       const selectedAccountCookie = await getAccountCookie()
       if (!selectedAccountCookie && selectedAccountId && selectedAccountDisplay) {
-        await saveAccountApi(selectedAccountId)
+        await saveAccountApi(selectedAccountDisplay)
       }
     } catch (error) {
       console.error('Error managing selected account cookie:', error)
