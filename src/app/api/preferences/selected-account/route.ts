@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { savePreferenceCookie } from "@/shared/lib/preferences.lib"
 import { ErrorCatched } from "@/shared/types/global.types"
 import { ACCOUNT_COOKIE_KEY } from "@/shared/constants/global.constants"
-import { AccountsDisplay } from "@/shared/types/accounts.types"
+import { AccountsCookie } from "@/shared/types/accounts.types"
 
 /**
  * Saves the account selected of type AccountsDisplay in a cookie
@@ -10,7 +10,7 @@ import { AccountsDisplay } from "@/shared/types/accounts.types"
 export async function POST(request: NextRequest) {
   try {
     const payload = await request.json()
-    const account: AccountsDisplay = payload?.account
+    const account: AccountsCookie = payload?.account
     if (!account) {
       return NextResponse.json({ message: 'Account is required' }, { status: 400 })
     }

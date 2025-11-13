@@ -1,12 +1,12 @@
 import { SAVE_SELECTED_ACCOUNT_API_ENDPOINT } from "../constants/global.constants"
-import { AccountsDisplay } from "../types/accounts.types"
+import { AccountsCookie } from "../types/accounts.types"
 
 /**
  * This function calls the API to save the selected account in the cookie for client side components
  * @param accountId - AccountDisplay
  * @returns Promise<void>
  */
-export const saveAccountApi = async (account: AccountsDisplay) => {
+export const saveAccountApi = async (account: AccountsCookie) => {
   try {
     const res = await fetch(SAVE_SELECTED_ACCOUNT_API_ENDPOINT, {
       method: 'POST',

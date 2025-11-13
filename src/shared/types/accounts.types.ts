@@ -36,6 +36,15 @@ export type AccountsDisplay = {
   alias?: string;
 }
 
+/**
+ * This type of account is just to save the neccessary info of the account without exposing sensitive data
+ */
+export type AccountsCookie = {
+  accountId: string;
+  name: string;
+  type: AccountTypes;
+}
+
 export type AccountTransfer = {
   accountId: string
   name: string
