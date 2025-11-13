@@ -18,10 +18,9 @@ interface TransactionManagerProps {
   resCategories: GetCategoriesResponse
   resBudgets: GetBudgetsResponse
   selectedAccount: AccountsCookie | null
-  accessToken: string
 }
 
-export const TransactionManager = ({ resCategories, resBudgets, selectedAccount, accessToken, }: TransactionManagerProps) => {
+export const TransactionManager = ({ resCategories, resBudgets, selectedAccount, }: TransactionManagerProps) => {
   const { categories, detailedError: errorCategories } = resCategories
   const { budgets, detailedError: errorBudgets } = resBudgets
   const [subscreen, setSubscreen] = useState<TransactionScreens>('expense')

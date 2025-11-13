@@ -33,7 +33,6 @@ export default async function CreateRecordPage() {
         resCategories={resCategories}
         resBudgets={resBudgets}
         selectedAccount={selectedAccountCookie}
-        accessToken={accessToken}
       />
     </>
   )
