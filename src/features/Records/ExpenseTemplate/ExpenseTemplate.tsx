@@ -30,7 +30,7 @@ import { useIndebtedPeople } from "@/shared/hooks/useIndebtedPeople"
 import { FurtherDetailsAccordion } from "../FurtherDetailsAccordion"
 import { useMediaQuery } from "@/shared/hooks/useMediaQuery"
 import { PersonalDebtManager } from "../IndebtedPeople/PersonalDebtManager"
-import { AccountsDisplay, CREDIT_ACCOUNT_TYPE } from "@/shared/types/accounts.types"
+import { AccountsCookie, CREDIT_ACCOUNT_TYPE } from "@/shared/types/accounts.types"
 import { Budget, SelectBudget } from "@/shared/types/budgets.types"
 import { useHandleBudgets } from "@/shared/hooks/useHandleBudgets"
 import { SelectBudgetDropdown } from "@/features/Budgets/SelectBudget"
@@ -40,7 +40,7 @@ import { CancelButtonExpenseTemplate } from "./CancelButtonExpenseTemplate"
 interface ExpenseTemplateProps {
   categories: Category[]
   budgetsFetched: Budget[]
-  selectedAccount: AccountsDisplay | null
+  selectedAccount: AccountsCookie | null
   editRecord: BankMovement | null
   accessToken: string
   detailedErrorCategories: DetailedError | null
@@ -200,7 +200,7 @@ export const ExpenseTemplate = ({
     if (!categoryError && !subcategoryError && !isAmountZero && !errorAmount && selectedAccount && date && subcategory && !openTagModal) {
       const amountNumber = cleanCurrencyString(currencyState)
       const payload: CreateExpensePayload = {
-        account: selectedAccount,
+        account: selectedAccount.accountId,
         amount: amountNumber,
         // Prop budgets deprecated
         budgets: [],

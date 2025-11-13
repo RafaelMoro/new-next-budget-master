@@ -10,14 +10,14 @@ import { LinkButton } from "@/shared/ui/atoms/LinkButton"
 import { DASHBOARD_ROUTE } from "@/shared/constants/global.constants"
 import { ExpenseTemplate } from "./ExpenseTemplate/ExpenseTemplate";
 import { GetBudgetsResponse } from "@/shared/types/budgets.types"
-import { AccountsDisplay } from "@/shared/types/accounts.types"
+import { AccountsCookie } from "@/shared/types/accounts.types"
 // import { IncomeTemplate } from "./IncomeTemplate"
 // import { TransferTemplate } from "./TransferTemplate"
 
 interface TransactionManagerProps {
   resCategories: GetCategoriesResponse
   resBudgets: GetBudgetsResponse
-  selectedAccount: AccountsDisplay | null
+  selectedAccount: AccountsCookie | null
   accessToken: string
 }
 
