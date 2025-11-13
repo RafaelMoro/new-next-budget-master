@@ -96,7 +96,7 @@ export const ExpenseTemplate = ({
   const {
     mutate: createExpense, isError: isErrorCreate, isPending: isPendingCreate, isSuccess: isSuccessCreate, error: errorCreate
   } = useMutation<ExpenseDataResponse, ExpenseErrorResponse, CreateExpensePayload>({
-    mutationFn: (data) => createExpenseCb(data, accessToken),
+    mutationFn: (data) => createExpenseCb(data),
     onSuccess: () => {
       router.refresh()
       setTimeout(() => {
