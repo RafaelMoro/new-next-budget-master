@@ -3,7 +3,7 @@ import { cookies } from 'next/headers'
 
 import { ACCOUNT_COOKIE_KEY, DASHBOARD_SCREEN_KEY, THEME_COOKIE_KEY } from '../constants/global.constants'
 import { ThemeMode } from '../types/global.types'
-import { AccountsDisplay } from '../types/accounts.types'
+import { AccountsCookie } from '../types/accounts.types'
 
 /**
  * This function gets the value of the theme in the cookie. It sets the cookie if it doesn't exist
@@ -52,7 +52,7 @@ export const deleteThemeCookie = async () => {
   }
 }
 
-export const getAccountCookie = async (): Promise<AccountsDisplay | null> => {
+export const getAccountCookie = async (): Promise<AccountsCookie | null> => {
   try {
     const cookieStore = await cookies()
     const account = cookieStore.get(ACCOUNT_COOKIE_KEY)?.value
