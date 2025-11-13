@@ -42,7 +42,6 @@ interface ExpenseTemplateProps {
   budgetsFetched: Budget[]
   selectedAccount: AccountsCookie | null
   editRecord: BankMovement | null
-  accessToken: string
   detailedErrorCategories: DetailedError | null
   detailedErrorBudgets: DetailedError | null
 }
@@ -51,7 +50,6 @@ export const ExpenseTemplate = ({
   categories,
   budgetsFetched,
   selectedAccount,
-  accessToken,
   detailedErrorCategories,
   detailedErrorBudgets,
   editRecord
@@ -107,7 +105,7 @@ export const ExpenseTemplate = ({
   const {
     mutate: editExpense, isError: isErrorEdit, isPending: isPendingEdit, isSuccess: isSuccessEdit, error: errorEdit
   } = useMutation<ExpenseDataResponse, ExpenseErrorResponse, EditExpensePayload>({
-    mutationFn: (data) => editExpenseCb(data, accessToken),
+    mutationFn: (data) => editExpenseCb(data),
     onError: () => {
       setTimeout(() => {
         resetEditRecordLS()
