@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { getAccountCookie } from '../lib/preferences.lib'
 import { saveAccountApi } from '../utils/user-info.utils'
 import { CREATE_RECORD_ROUTE, LOGIN_ROUTE } from '../constants/global.constants'
+import { AccountsCookie } from '../types/accounts.types'
 
 export const useDashboard = () => {
   const router = useRouter()
@@ -23,7 +24,12 @@ export const useDashboard = () => {
     try {
       const selectedAccountCookie = await getAccountCookie()
       if (!selectedAccountCookie && selectedAccountId && selectedAccountDisplay) {
-        await saveAccountApi(selectedAccountDisplay)
+        const accountCookie: AccountsCookie = {
+          accountId: selectedAccountDisplay.accountId,
+          name: selectedAccountDisplay.name,
+          type: selectedAccountDisplay.type
+        }
+        await saveAccountApi(accountCookie)
       }
     } catch (error) {
       console.error('Error managing selected account cookie:', error)
