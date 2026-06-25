@@ -13,11 +13,10 @@ Parse whatever the user supplied.
 
 Before any codebase exploration, read these files (do not re-discover what is already documented):
 
-1. `AGENTS.md` - toolchain, commands, architecture overview, env vars, branch flow
-2. `.github/copilot-instructions.md` - unit test conventions and reference test files
-3. `package.json` - dependencies and npm scripts (`pnpm dev | build | start | lint | test | test:watch`)
-
-If a deeper structural reference is needed, inspect `src/` directly (`src/app/`, `src/features/<Domain>/`, `src/shared/`, `src/zustand/`) - there is no `REPO_CONTEXT.md` in this repo.
+1. `REPO_CONTEXT.md` - full architecture map: directory layout, BFF/auth flow, route handler inventory, state strategy, backend-discovery procedure, conventions, open questions
+2. `AGENTS.md` - toolchain, commands, architecture overview, env vars, branch flow
+3. `.github/copilot-instructions.md` - unit test conventions and reference test files
+4. `package.json` - dependencies and npm scripts (`pnpm dev | build | start | lint | test | test:watch`)
 
 ## Step 2 - Story quality check
 

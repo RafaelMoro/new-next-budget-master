@@ -1,6 +1,8 @@
 # AGENTS.md
 
-Compact guide for OpenCode sessions working in this repo. Verify against the codebase before trusting; see the referenced files for details.
+Compact guide for AI agent sessions working in this repo (Claude Code, opencode, GitHub Copilot, Cursor, etc.). Verify against the codebase before trusting; see the referenced files for details.
+
+> **Architecture deep-dive**: see [`REPO_CONTEXT.md`](./REPO_CONTEXT.md) at the repo root for the full directory layout, BFF/auth flow, route handler inventory, state strategy, and backend-discovery procedure. This file is a quick reference; `REPO_CONTEXT.md` is the map.
 
 ## Toolchain
 
