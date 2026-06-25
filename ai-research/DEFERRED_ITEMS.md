@@ -16,7 +16,18 @@ Source: `ai-research/INCOME_FEATURE_RESEARCH.md` §6.
 - **Add when:** Edit flow is needed — **must** also revert the drawer patch at the same time
 - **Old repo:** `old-budget-master/src/features/Records/EditIncome.tsx`, `old-budget-master/src/app/edit-record/`
 
-## 3. Transfer feature
-- **What:** `TransferTemplate` (currently commented out in `src/features/Records/TransactionManager.tsx:73-82`)
-- **Status:** Out of scope entirely
-- **Add when:** Transfer transactions become a product requirement
+## 3. Transfer feature — CREATE (IN SCOPE)
+- **What:** `TransferTemplate` + `TransferAccountsSelector` + `useTransferBankAccounts` + BFF `POST /api/records/transfer` + `createTransferCb`
+- **Status:** This PR implements create-only transfer MVP
+- **See:** `ai-research/TRANSFER_FEATURE_RESEARCH.md`
+
+## 4. Transfer `expensesPaid` sub-feature
+- **What:** `destination?.type === 'Crédito'` → `SelectPaidSection` + `SelectPaidDrawer` + fetch-expenses-by-date endpoint
+- **Status:** Deferred — `TransferIncome.expensesPaid` stays `[]` in MVP
+- **Add when:** User requests transfer→expense linking
+
+## 5. Edit-transfer page
+- **What:** `src/app/edit-record/edit-transfer/page.tsx` + `EditTransfer` wrapper
+- **Status:** Deferred — `RecordsPreviewDrawer` patched to toast on transfer edit attempt
+- **Add when:** Edit transfer flow is needed — **must** also revert the drawer patch at the same time
+- **Old repo:** `old-budget-master/src/features/Records/EditTransfer.tsx`, `old-budget-master/src/app/edit-record/`
