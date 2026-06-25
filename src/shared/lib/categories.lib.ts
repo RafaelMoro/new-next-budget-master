@@ -15,7 +15,7 @@ export const fetchCategories = async (): Promise<GetCategoriesResponse> => {
         categories: []
       }
     }
-    const uri = process.env.NEXT_PUBLIC_BACKEND_URI
+    const uri = process.env.BACKEND_URI
     if (!uri) {
       throw new Error("Backend URI is not defined");
     }
