@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 
 import { ACCOUNT_COOKIE_KEY, DASHBOARD_SCREEN_KEY, THEME_COOKIE_KEY } from '../constants/global.constants'
 import { ThemeMode } from '../types/global.types'
+import { AccountsCookie } from '../types/accounts.types'
 
 /**
  * This function gets the value of the theme in the cookie. It sets the cookie if it doesn't exist
@@ -51,7 +52,7 @@ export const deleteThemeCookie = async () => {
   }
 }
 
-export const getAccountCookie = async () => {
+export const getAccountCookie = async (): Promise<AccountsCookie | null> => {
   try {
     const cookieStore = await cookies()
     const account = cookieStore.get(ACCOUNT_COOKIE_KEY)?.value
@@ -59,9 +60,10 @@ export const getAccountCookie = async () => {
       // Return default
       return null
     }
-    return account
+    return JSON.parse(account)
   } catch (error) {
     console.error('Error deleting theme preference:', error)
+    return null
   }
 }
 
@@ -121,5 +123,18 @@ export const getPreferencesCookie = async (cookie: string) => {
     return cookieValue
   } catch (error) {
     console.error(`Error getting ${cookie} preference:`, error)
+  }
+}
+
+export const savePreferenceCookie = async ({ cookieKey, cookieValue }: { cookieKey: string, cookieValue: string }) => {
+  try {
+    const cookieStore = await cookies()
+    cookieStore.set(cookieKey, cookieValue, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    })
+  } catch (error) {
+    console.error(`Error saving cookie ${cookieKey}:`, error)
   }
 }

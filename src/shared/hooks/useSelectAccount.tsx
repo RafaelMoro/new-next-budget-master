@@ -1,6 +1,6 @@
 import { useDashboardStore } from "@/zustand/provider/dashboard-store-provider"
 import { useEffect, useState } from "react"
-import { AccountsDisplay } from "../types/accounts.types"
+import { AccountsCookie, AccountsDisplay } from "../types/accounts.types"
 import { saveAccountApi } from "../utils/user-info.utils"
 import { fetchRecordsCurrentMonth } from "../lib/dashboard.lib"
 
@@ -33,8 +33,14 @@ export const useSelectAccount = ({ limit10Accounts = false, closeModal }: Select
       return;
     }
     const newOptions = accountsDisplay.filter(acc => acc.accountId !== accountId)
+
+    const accountCookie: AccountsCookie = {
+      accountId: selectedAccDisplay.accountId,
+      name: selectedAccDisplay.name,
+      type: selectedAccDisplay.type
+    }
     // Save the account selected into the cookie
-    await saveAccountApi(selectedAccDisplay.accountId)
+    await saveAccountApi(accountCookie)
     setAccountsOptions(newOptions)
     // This updates select account display and selected account
     updateSelectedAccount(selectedAcc)

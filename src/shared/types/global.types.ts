@@ -1,6 +1,13 @@
 import { AxiosError, AxiosResponse } from "axios";
+import { BankMovement } from "./records.types";
 
 export type ThemeMode = 'light' | 'dark';
+
+export type BudgetMasterLocalStorage = {
+  'edit-record': {
+    record: BankMovement
+  }
+}
 
 export type ErrorCatched = {
   message: string;

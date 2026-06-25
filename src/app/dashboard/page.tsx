@@ -23,7 +23,7 @@ export default async function DashboardPage() {
     fetchAccounts(),
     getAccountCookie()
   ])
-  const selectedAccount = selectedAccountCookie ?? accounts[0]?._id ?? null;
+  const selectedAccount = selectedAccountCookie?.accountId ?? accounts[0]?._id ?? null;
   const { records } = await fetchRecordsCurrentMonth({ accountId: selectedAccount });
 
   return (
