@@ -89,10 +89,13 @@ No PUT/DELETE — MVP is create-only. Don't add them "for later" (ponytail: YAGN
 
 **`src/shared/utils/records.utils.ts`** — Modify.
 - Add `createTransferCb` after `editIncomeCb` (line 68), mirroring `createExpenseCb:30-38`. Signature: `(payload: CreateTransferPayload) => Promise<TransferDataResponse>`. POSTs to `TRANSFER_API_ENDPOINT`. Update the type import on line 2 to include `CreateTransferPayload, TransferDataResponse`.
-- Add `getValuesIncomeAndExpense` after `resetEditRecordLS` (line 76). Pure utility — no auth. Input: `{ values: CreateTransferValues, expensesSelected: ExpensePaid[] }` (for parity with old repo signature; call site always passes `[]`). Returns `{ newValuesExpense: TransferExpense, newValuesIncome: TransferIncome }`. Builds:
-  - `newValuesExpense`: `{ ...values, account: values.origin, typeOfRecord: 'transfer', isPaid: true, linkedBudgets: [], indebtedPeople: [] }` (drop `origin`/`destination` keys — they are NOT in `TransferExpense`)
-  - `newValuesIncome`: `{ ...values, account: values.destination, typeOfRecord: 'transfer', expensesPaid: [], indebtedPeople: [] }` (drop `origin`/`destination`)
-  - Ponytail: the `expensesSelected` arg is kept for signature parity but unused in MVP → `expensesPaid: expensesSelected` (always `[]` at call site). Add `// ponytail: expensesSelected arg retained for parity; always [] in MVP, credit-destination path deferred`.
+- Add `getValuesIncomeAndExpense` after `resetEditRecordLS` (line 76). Pure utility — no auth. Port old `records.utils.ts:175-196` with one MVP simplification: drop the `expensesSelected` arg, hardcode `expensesPaid: []` (research §5.2 — keeps the credit-destination path deferred). Update the type import on line 2 to include `CreateTransferValues, ExpensePaid, TransferExpense, TransferIncome`. Confirmed field shape (verified against old `records.utils.ts:175-196` + new `records.types.ts:158-187`):
+  - Signature: `({ values }: { values: CreateTransferValues }) => { newValuesExpense: TransferExpense, newValuesIncome: TransferIncome }`
+  - Destructure `{ origin, destination, ...restValues }` off `values` (`restValues` = amount, budgets, category, date, description, shortName, subCategory, tag — exactly the 8 shared fields).
+  - `newValuesExpense`: `{ ...restValues, indebtedPeople: [], account: origin, typeOfRecord: 'transfer', isPaid: true, linkedBudgets: [] }`
+  - `newValuesIncome`: `{ ...restValues, indebtedPeople: [], expensesPaid: [], account: destination, typeOfRecord: 'transfer' }`
+  - The spreads land on `TransferExpense` (`:158-172`) and `TransferIncome` (`:174-187`) field-for-field — no extra keys, no missing keys.
+  - `// ponytail: dropped expensesSelected arg from old signature; MVP always passes []; credit-destination path deferred (DEFERRED_ITEMS #4). Restore the arg when wiring useSelectExpensesPaid.`
 
 **`REPO_CONTEXT.md`** — Modify (repo convention; fold docs into this phase):
 - Add row to the API route table (§`src/app/api/`): `| \`/api/records/transfer\` | \`POST\` | \`…/records/transfer/route.ts\` | BFF proxy | Create transfer (forwards to \`${BACKEND_URI}/records/transfer\`) |`
@@ -128,7 +131,7 @@ export const useTransferBankAccounts = ({
 ```
 
 Structure (`"use client"` at top — uses `useState`):
-- Map `AccountBank[]` → `AccountTransfer[]` inline (`{ accountId: a._id, name: a.title, type: a.accountType as AccountTypes }`). Ponytail: inline map beats importing `transformAccountsDisplay` if that helper does more than this — verify at impl time; reuse the helper if it already does exactly this.
+- Map `AccountBank[]` → `AccountTransfer[]` inline: `accounts.map(a => ({ accountId: a._id, name: a.title, type: a.accountType as AccountTypes }))`. Do **not** reuse `transformAccountsDisplay` from `accounts.utils.ts:24` — it returns `AccountsDisplay` (7 fields incl. `amount`/`alias`/`terminationFourDigits`/`accountProvider`); `AccountTransfer` (`accounts.types.ts:48`) needs only 3 (`accountId`, `name`, `type`). `transformAccountsDisplay` over-produces; the inline map is the 3-line path. `// ponytail: inline map — transformAccountsDisplay returns 7 fields, AccountTransfer needs 3.`
 - `origin` state: default = `accountsFormatted.find(a => a.accountId === selectedAccountId) ?? accountsFormatted[0] ?? null`.
 - `destination` state: default `null`.
 - `destinationAccounts` = `accountsFormatted.filter(a => a.accountId !== origin?.accountId)`.
@@ -165,7 +168,7 @@ Independently testable: both components render in isolation with props literal (
   isPending: boolean                              // always false in MVP; kept for parity
 }
 ```
-Two `Dropdown` selectors (reuse the same dropdown atom the old file used — verify import path against new repo at impl time). Labels `Origen:` / `Destino:`. Render `destinationError` text when set. No `accessToken`, no auth, no fetch. `disabled={isPending}` on both dropdowns.
+Two `Dropdown` selectors — uses `Button`, `Dropdown`, `DropdownItem` from `flowbite-react` directly (verified: same imports as old repo's `TransferAccountsSelector.tsx:4`; flowbite-react is already in the repo). Uses `renderTrigger` to put a custom button inside each dropdown. Labels `Origen: ${origin?.name}` / `Destino: ${destination?.name ?? ''}`; `Cargando...` while `isPending`. `disabled={isPending}` on both buttons. Render `destinationError` via `ErrorMessage` (already in new repo at `@/shared/ui/atoms/ErrorMessage`). No `accessToken`, no auth, no fetch. Port the 55-line file near-verbatim.
 
 **`src/features/Records/TransferTemplate.tsx`** — Create. Mirror `IncomeTemplate.tsx` (the closest sibling — no budgets, no indebted people). Props:
 ```ts
@@ -286,7 +289,7 @@ Independently testable: `pnpm dev` → click "Transferencia" → see the form; c
 #### Changes Required
 
 **`src/features/Records/TransactionManager.tsx`** — Modify.
-- Add to props interface: `resAccounts: GetAccountsResponse`. Add import `import { GetAccountsResponse } from "@/shared/types/accounts.types"` (verify exact type location — research §3.1 says `fetchAccounts` returns `GetAccountsResponse`; confirm the type lives in `accounts.types.ts` or `dashboard.lib.ts` at impl time).
+- Add to props interface: `resAccounts: GetAccountsResponse`. Import: `import { GetAccountsResponse } from "@/shared/types/accounts.types"` (type defined at `accounts.types.ts:121`).
 - Line 15: uncomment `import { TransferTemplate } from "./TransferTemplate"`.
 - Destructure `resAccounts` in the component params (line 23).
 - Lines 72-81: replace the commented block with:
