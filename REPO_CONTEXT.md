@@ -342,11 +342,19 @@ Allow-list (env-driven, set in the backend's `src/main.ts`): `[FRONTEND_URI, TES
 
 ### When you need to learn more or add a proxied endpoint
 
-1. **Clone the repo** (SSH): `git clone git@github.com:RafaelMoro/BE_Personal_Finances.git` — it's private.
-2. **Read the DTO first** under `src/<module>/dtos/*.dto.ts` — that's the contract. Read the controller (`src/<module>/controllers/<module>.controller.ts`) to see the method, path, and guards (`@Public()` vs default `JwtAuthGuard`).
-3. **Mirror the BFF pattern** from `src/app/api/accounts/route.ts`: read the access token via `getAccessToken()`, attach `Authorization: Bearer <token>`, `await axios.<method>(...)`, return `NextResponse.json(data, { status })`. For login/register flows, also handle the `set-cookie` extraction via `getCookieProps` if you need to relay a cookie to the browser.
-4. **Check the response envelope** — the backend wraps responses in `GeneralResponse` (`{ version, success, message, data, error }`). The BFF currently unwraps to `{ message }` on error; consider whether to preserve `data` on success.
-5. **Update this doc** — add the new route handler to the [API route handlers](#srcappapi--route-handlers-bff--cookie-layer) table and remove it from the "Not yet proxied" list above.
+> **Do not clone the backend repo.** It is private and lives outside this workspace. The BFF agent has no SSH access. Use the delegation procedure below instead.
+
+1. **Detect.** If the work touches a backend endpoint — adding a new proxied route, changing an existing proxy's request/response shape, debugging a 400 from the BFF that might be a backend mismatch, or scoping an unproxied feature (`/budgets`, `/categories`, `/expenses-actions`, `/incomes-actions`, `/records/transfer`, `/budget-history`) — you need backend info you cannot infer.
+2. **Formulate the delegation prompt.** Open the template at [`.github/prompts/backend-research.prompt.md`](.github/prompts/backend-research.prompt.md) (the opencode equivalent is at `.opencode/command/backend-research.md`; both are the same content). Fill in the `{VARIABLE}` placeholders:
+   - `{TASK_DESCRIPTION}` — what the BFF is about to do, in one or two sentences.
+   - `{ENDPOINTS_OF_INTEREST}` — the specific backend paths.
+   - `{SPECIFIC_QUESTIONS}` — numbered list of what you need to know (DTOs, guards, response shape, edge cases).
+   - `{KNOWN_BACKEND_CONTEXT}` — leave as the default unless the BFF side has extra context the backend agent should know about.
+   - `{OUTPUT_DESTINATION}` — usually `ai-research/{story}.md` under a `## Backend reference` section.
+3. **Hand off.** Tell the user to run the filled-in prompt with their backend agent (in a separate session that has access to `BE_Personal_Finances`) and paste the response back. **Wait for the response** before continuing — do not invent answers.
+4. **Verify and fold in.** When the response comes back, sanity-check the line numbers against this repo's own assumptions (e.g. that the BFF currently unwraps `error.response.data.error.message` on failures), then add a `## Backend reference` section to the active research doc and proceed.
+5. **Mirror the BFF pattern** from `src/app/api/accounts/route.ts`: read the access token via `getAccessToken()`, attach `Authorization: Bearer <token>`, `await axios.<method>(...)`, return `NextResponse.json(data, { status })`. For login/register flows, also handle the `set-cookie` extraction via `getCookieProps` if you need to relay a cookie to the browser.
+6. **Update this doc** — add the new route handler to the [API route handlers](#srcappapi--route-handlers-bff--cookie-layer) table and remove it from the "Not yet proxied" list above.
 
 ---
 

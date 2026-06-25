@@ -54,6 +54,7 @@ Apply these constraints **before** exploration:
 - Don't invent features the story doesn't mention
 - If scope seems unclear, ask before exploring
 - Respect the feature-sliced layout: changes belong in `src/features/<Domain>/` unless they are genuinely cross-cutting (in which case they go in `src/shared/`)
+- **Do not clone or shell into the backend repo** (`BE_Personal_Finances`). It is private and lives outside this workspace. When the story needs backend info you cannot infer from the BFF code or `REPO_CONTEXT.md`, use the delegation procedure in `REPO_CONTEXT.md` → "When you need to learn more or add a proxied endpoint" and the template at `.opencode/command/backend-research.md` (Copilot equivalent: `.github/prompts/backend-research.prompt.md`). Draft the prompt, hand it to the user, and **wait** for their response — do not invent answers.
 
 ## Step 5 - Ask about scope and complexity
 
