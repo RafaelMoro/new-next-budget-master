@@ -11,7 +11,7 @@ import { DASHBOARD_ROUTE } from "@/shared/constants/global.constants"
 import { ExpenseTemplate } from "./ExpenseTemplate/ExpenseTemplate";
 import { GetBudgetsResponse } from "@/shared/types/budgets.types"
 import { AccountsCookie } from "@/shared/types/accounts.types"
-// import { IncomeTemplate } from "./IncomeTemplate"
+import { IncomeTemplate } from "./IncomeTemplate/IncomeTemplate"
 // import { TransferTemplate } from "./TransferTemplate"
 
 interface TransactionManagerProps {
@@ -61,16 +61,15 @@ export const TransactionManager = ({ resCategories, resBudgets, selectedAccount,
             editRecord={null}
           />
         )}
-        {/* { subscreen === 'income' && (
+        { subscreen === 'income' && (
           <IncomeTemplate
             categories={categories}
             selectedAccount={selectedAccount}
-            accessToken={accessToken}
             detailedErrorCategories={errorCategories}
             editRecord={null}
           />
         )}
-        { subscreen === 'transfer' && (
+        {/* { subscreen === 'transfer' && (
           <TransferTemplate
             categories={categories}
             selectedAccount={selectedAccount}
