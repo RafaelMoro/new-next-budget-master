@@ -1,3 +1,9 @@
+## v0.15.0 (2026-06-25)
+
+### Pull Requests
+[#16](https://github.com/RafaelMoro/new-next-budget-master/pull/16) | Add AI workflows
+
+
 ## v0.14.0 (2026-06-25)
 
 ### Pull Requests
