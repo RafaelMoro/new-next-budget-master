@@ -227,21 +227,15 @@ Mirror the structure of `__tests__/features/Records/RecordPreviewDrawer.test.tsx
 2. **Edit-income page** — `src/app/edit-record/edit-income/page.tsx` + `EditIncome` wrapper reading record from localStorage. **Not built now.** Side effect: `RecordsPreviewDrawer.tsx:74` already pushes income records to `EDIT_INCOME_PAGE_ROUTE` on edit; until that page exists, the edit button leads to a 404. See **§10 Open Question** for the pending decision.
 3. **Transfer feature** — out of scope; `TransferTemplate` remains fully commented out in `TransactionManager.tsx`.
 
-## 10. Open question (pending answer — to be resolved before implementation)
+## 10. Open question — RESOLVED
 
 **Q:** Since the scope is **create-only** and the `/edit-record/edit-income` page is **not** being built in this PR, `RecordsPreviewDrawer.handleEditRecord` will currently push income records to a 404 route. How should this be handled in this PR?
 
-### Option A — Patch the drawer in this PR (Recommended)
-Modify `src/features/Records/RecordsPreviewDrawer.tsx:63-72` so that when `record.typeOfRecord === 'income'`, the edit button either:
-- shows a `toast.error("La edición de ingresos aún no está disponible.")` and does not navigate, or
-- is disabled / hidden for income records.
+### Decision: **Option A — Patch the drawer**
+
+Modify `src/features/Records/RecordsPreviewDrawer.tsx:63-72` so that when `record.typeOfRecord === 'income'`, the edit button shows `toast.error("La edición de ingresos aún no está disponible.")` and does not navigate. (Sub-option: keep button visible but blocked with toast feedback — preferred over disable/hide so users see the action exists.)
 
 This avoids shipping a broken route and clearly signals the limitation. The edit flow is restored in the follow-up that also adds the edit page.
-
-### Option B — Leave the drawer as-is
-Accept the broken 404 on income edit attempts until the edit page is built in a follow-up. Smaller diff in this PR but ships a known-broken user path.
-
-**Status:** ⏳ Awaiting stakeholder decision. Will be recorded in `CHANGELOG.md` by the bot on merge; please confirm the chosen option before opening the PR.
 
 ## 7. Risks / gotchas
 
