@@ -83,7 +83,7 @@ Each subfolder contains a `route.ts` exporting HTTP method handlers (`GET`, `POS
 | `/api/auth/sign-out` | `GET` | `…/auth/sign-out/route.ts` | **Sign-out** | Calls `signOut()` and `revalidatePath(LOGIN_ROUTE)` |
 | `/api/accounts` | `POST`, `PUT`, `DELETE` | `…/accounts/route.ts` | BFF proxy | All three proxy to `${BACKEND_URI}/account-actions/` (create / edit / delete account) |
 | `/api/records` | `POST` | `…/records/route.ts` | BFF proxy | POST is used to send `{ accountId, month, year }` and the handler issues a GET to `${BACKEND_URI}/records/get-expenses-and-incomes-by-month/{accountId}/{month}/{year}` — naming is "fetch" despite using POST |
-| `/api/records/income` | `POST` | `…/records/income/route.ts` | BFF proxy | Create income record |
+| `/api/records/income` | `POST`, `PUT`, `DELETE` | `…/records/income/route.ts` | BFF proxy | Create / edit / delete income record |
 | `/api/records/expense` | `POST` | `…/records/expense/route.ts` | BFF proxy | Create expense record |
 | `/api/preferences/theme` | `POST` | `…/preferences/theme/route.ts` | **Cookie setter** | Saves the theme to a server cookie via `saveThemeCookie()` (no backend call) |
 | `/api/preferences/selected-account` | `POST` | `…/preferences/selected-account/route.ts` | **Cookie setter** | Saves the selected account to a server cookie via `savePreferenceCookie()` |

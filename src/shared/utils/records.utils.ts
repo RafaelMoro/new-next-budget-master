@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CreateExpensePayload, DeleteExpenseDataResponse, DeleteIncomeDataResponse, DeleteRecordPayload, EditExpensePayload, ExpenseDataResponse } from "../types/records.types";
+import { CreateExpensePayload, CreateIncomePayload, DeleteExpenseDataResponse, DeleteIncomeDataResponse, DeleteRecordPayload, EditExpensePayload, EditIncomePayload, ExpenseDataResponse, IncomeDataResponse } from "../types/records.types";
 import { EXPENSE_API_ENDPOINT, INCOME_API_ENDPOINT } from "../constants/global.constants";
 import { removeFromLocalStorage } from "./local-storage.utils";
 
@@ -40,6 +40,26 @@ export const createExpenseCb = async (payload: CreateExpensePayload): Promise<Ex
 export const editExpenseCb = async (payload: EditExpensePayload): Promise<ExpenseDataResponse> => {
   try {
     const response = await axios.put<ExpenseDataResponse>(EXPENSE_API_ENDPOINT, payload)
+    const data = response.data
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const createIncomeCb = async (payload: CreateIncomePayload): Promise<IncomeDataResponse> => {
+  try {
+    const response = await axios.post<IncomeDataResponse>(INCOME_API_ENDPOINT, payload)
+    const data = response.data
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const editIncomeCb = async (payload: EditIncomePayload): Promise<IncomeDataResponse> => {
+  try {
+    const response = await axios.put<IncomeDataResponse>(INCOME_API_ENDPOINT, payload)
     const data = response.data
     return data
   } catch (error) {
