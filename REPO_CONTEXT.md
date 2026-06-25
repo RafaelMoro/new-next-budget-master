@@ -175,6 +175,14 @@ Implications:
 - Do not store tokens in `localStorage`.
 - BFF route handlers should not duplicate the auth logic; they all funnel through `getAccessToken()`.
 
+#### Auth contract with the backend
+
+- **Backend cookie name**: `accessToken` (constant `ACCESS_TOKEN_COOKIE_NAME` in the backend's `src/constants.ts`).
+- **Backend cookie flags**: `httpOnly: true`, `secure: NODE_ENV === 'production'`, `sameSite: 'strict'`, `maxAge: 5d`.
+- **JWT expiry**: `5d` (matches the cookie `maxAge`). **No refresh / rotation endpoint** — the client re-logs-in after 5 days.
+- **No `GET /users/me`**. The current user is hydrated from the `POST /auth` response body (`{ version, success, message, data: { user } }`). Because the cookie is httpOnly, the BFF extracts the value server-side via `getCookieProps` — the browser cannot read it.
+- **Backend guard policy**: `JwtAuthGuard` is global; routes opt out with `@Public()` (applies to user registration, forgot/reset password, and `categories/create-local-categories`).
+
 ---
 
 ## Environment variables
@@ -270,17 +278,75 @@ If you need to reason about Vercel-specific behavior (env vars, edge runtime, IS
 
 ## External backend reference
 
-This app's data is owned by a separate backend service. The repo does **not** include that backend's code or documentation. To get up to speed on it during a research or planning task, follow this procedure:
+> **Source of truth**: **[BE_Personal_Finances](git@github.com:RafaelMoro/BE_Personal_Finances.git)** — private GitHub repo, package name `be_personal_finances`. CHANGELOG entries may link the old `RafaelMoro/BE_Budget_Master` URL (the repo was renamed at some point). All backend details below are sourced from that repo's code, not invented.
 
-1. **Ask the user** for the backend repository URL and any access notes (private repo, monorepo path, etc.). Do not invent or guess.
-2. **Fetch the backend's docs first**: use `webfetch` on its `README.md`, `package.json` / `go.mod` / `pyproject.toml`, and any `docs/` entry point.
-3. **Identify**:
-   - Tech stack and language
-   - Auth contract (does the access token come back as a cookie, in a JSON body, etc.?)
-   - Endpoint shapes and DTOs (especially the ones consumed by the BFF proxies listed above)
-   - Deployment target and how to run it locally
-4. **Record** findings in the active research doc under a `## Backend reference` section, with the repo URL, the fetch date, and a short summary. This becomes the canonical reference for the rest of the research/planning session.
-5. **Cross-check** every BFF route handler in `src/app/api/**` against the backend's actual contract; flag mismatches as open questions.
+### Tech stack
+
+- **Runtime / framework**: Node ≥22.16, **NestJS 11** (`@nestjs/platform-express`). Package manager pnpm ≥10.11 (a `bun.lockb` is also present for the deploy build).
+- **DB**: MongoDB via Mongoose 8 / `@nestjs/mongoose` (Atlas).
+- **Auth**: `@nestjs/jwt` + `passport-jwt` + `passport-local`, `bcryptjs`.
+- **Mail**: Resend + `react-email` / nodemailer, Handlebars templates under `emails/`.
+- **Hosting**: AWS Lambda + API Gateway via Serverless Framework — service `budget-master-test-api`, stage `production`, `/{proxy+}` catch-all, runtime `nodejs22.x`, 15s timeout.
+- **No Postgres / Redis / queue deps.**
+
+### Versioning and contract docs
+
+- **No URL versioning** (`setGlobalPrefix('/api/v1')`-style is absent). The "version" is the npm package version, surfaced in every response's `version` field (sourced from `process.env.npm_package_version`) and tracked in `CHANGELOG.md`. Effective policy: **ship and hope** — breaking changes land on the same unversioned paths. Phrase the BFF cross-check step accordingly.
+- **No OpenAPI / Swagger UI**. `@nestjs/swagger` and `swagger-ui-express` are installed but only `PartialType` is imported; there is no `SwaggerModule.setup` call. The de-facto contract is the `class-validator` DTOs under each module's `*.dto.ts` (e.g. `accounts.dto.ts`, `budgets.dto.ts`, `categories/dtos/categories.dto.ts`, `records/dtos/records.dto.ts`, `transfer.dto.ts`, `users/dtos/users.dto.ts`, `expenses.dto.ts`, `incomes.dto.ts`, `budget-history.dto.ts`) and the shared `GeneralResponse` envelope (`src/response.interface.ts`, `INITIAL_RESPONSE`).
+- **README** is the unmodified NestJS starter — no project-specific API docs. No Postman collection in the repo.
+
+### Base URL / `BACKEND_URI`
+
+| Env | `BACKEND_URI` | Notes |
+|-----|---------------|-------|
+| Local dev | `http://localhost:8080` (or whatever `PORT` is set to) | Backend runs via `pnpm dev` (Nest) or `pnpm dev:sls` (Serverless Offline). No Docker / compose. No global API prefix — routes are at the root. |
+| Vercel production | API Gateway URL (CloudFormation output of the `production` stage) | The only deployed Serverless stage. |
+| Vercel preview | **Not configured** | No preview stage in `serverless.yml`. Either reuses the production API Gateway URL or a manually-deployed stage — confirm with `@RafaelMoro` before relying on it. |
+
+The frontend prod origin used for CORS allow-listing and email links is `https://next.budget-master.space` (constant `PROD_URI`). That is **not** the backend URL.
+
+### Routes inventory
+
+No global prefix. Top-level backend paths: `/auth`, `/users`, `/account-actions`, `/records`, `/budgets`, `/categories`, `/expenses-actions`, `/incomes-actions`, `/budget-history`.
+
+**Proxied by this app** (see the [API route handlers](#srcappapi--route-handlers-bff--cookie-layer) section above for the BFF-side file map): `/auth` (login), `/users/{create-user,forgot-password,reset-password}`, `/account-actions/`. The `/api/records` proxy hits `GET /records/get-expenses-and-incomes-by-month/{accountId}/{month}/{year}`; `/api/records/{income,expense}` POST to the legacy `/expenses-actions` and `/incomes-actions` controllers respectively.
+
+**Not yet proxied** (real backend routes; no BFF route handler exists):
+
+- `GET|POST /budgets`, `GET|PUT|DELETE /budgets/:budgetId` — full CRUD
+- `GET /categories`, `POST /categories`, `POST /categories/create-local-categories` (public, seeds defaults), `PUT /categories`, `DELETE /categories` — full CRUD + public seed
+- `GET /expenses-actions/:accountId/:month/:year`, `POST|PUT|DELETE /expenses-actions` — legacy expenses layer
+- `POST|PUT|DELETE /incomes-actions` — legacy incomes layer
+- `POST /records/transfer`, `GET /records/expenses-and-incomes/:accountId/:month/:year` — newer records layer (transfer + per-month aggregator)
+- `GET|POST|PUT|DELETE /budget-history`, `POST /budget-history/add-record`, `POST /budget-history/delete-record` — budget ledger
+
+The `Budget` and `Category` features in this repo's UI (and their mock fixtures under `__tests__/mocks/`) currently cannot talk to the backend until route handlers are added.
+
+### CORS
+
+Allow-list (env-driven, set in the backend's `src/main.ts`): `[FRONTEND_URI, TEST_FRONTEND_URI, DOMAIN_URI]`. Any new Vercel preview origin must be appended to one of these env vars. `credentials: true` is **not** explicitly set in `enableCors`; the httpOnly + `sameSite: 'strict'` cookie is fine in practice because the BFF re-signs and forwards the token server-side — the browser only ever talks to the BFF, never the backend directly.
+
+### Domain model (entities the BFF touches)
+
+| Entity | Backend location | Notable fields |
+|--------|------------------|----------------|
+| `User` | `src/users/entities/users.entity.ts` | `email` (unique), `password`, `firstName`, `lastName`, `middleName?`, `oneTimeToken?` |
+| `Account` | `src/repositories/accounts/entities/accounts.entity.ts` | `title`, `alias`, `accountType: string` (free-form — the "AccountType" dropdown values are FE-only), `accountProvider: CardProvider`, `terminationFourDigits`, `backgroundColor`, `color`, `amount`, `sub` |
+| `CardProvider` (alias `AccountProvider`) | `src/repositories/accounts/accounts.interface.ts:30` | `'visa' \| 'mastercard' \| 'american-express'`; validated by `card-provider.service.ts` |
+| `AccountRecord` | `src/domain/records/entities/records.entity.ts` | `typeOfRecord: 'expense' \| 'income' \| 'transfer'`, embedded `indebtedPeople`, `transferRecord{transferId, account}`, refs to `Account` and `Category`, `budgets: string[]` |
+| `Category` | `src/categories/entities/categories.entity.ts` | `categoryName`, `subCategories: string[]`, `icon`, `sub` |
+| `Budget` | `src/budgets/budgets.entity.ts` | `name`, `description?`, `typeBudget`, `sub`, `startDate`, `endDate`, `currentAmount`, `limit`, `period?`, `isActive?`, `nestResetDate?` |
+| `BudgetHistory` | `src/budget-history/` | Ledger of records added/removed from a budget |
+
+> **Caveat — dual layer for income/expense.** There is a parallel pair of legacy modules (`src/repositories/expenses/`, `src/repositories/incomes/`) with their own `CreateExpense` / `CreateIncome` DTOs and controllers, while the newer `records` controller only exposes `transfer` + the per-month aggregator. The BFF's `/api/records/{income,expense}` proxies currently hit the legacy controllers — confirm before assuming the new `AccountRecord` schema applies to create flows.
+
+### When you need to learn more or add a proxied endpoint
+
+1. **Clone the repo** (SSH): `git clone git@github.com:RafaelMoro/BE_Personal_Finances.git` — it's private.
+2. **Read the DTO first** under `src/<module>/dtos/*.dto.ts` — that's the contract. Read the controller (`src/<module>/controllers/<module>.controller.ts`) to see the method, path, and guards (`@Public()` vs default `JwtAuthGuard`).
+3. **Mirror the BFF pattern** from `src/app/api/accounts/route.ts`: read the access token via `getAccessToken()`, attach `Authorization: Bearer <token>`, `await axios.<method>(...)`, return `NextResponse.json(data, { status })`. For login/register flows, also handle the `set-cookie` extraction via `getCookieProps` if you need to relay a cookie to the browser.
+4. **Check the response envelope** — the backend wraps responses in `GeneralResponse` (`{ version, success, message, data, error }`). The BFF currently unwraps to `{ message }` on error; consider whether to preserve `data` on success.
+5. **Update this doc** — add the new route handler to the [API route handlers](#srcappapi--route-handlers-bff--cookie-layer) table and remove it from the "Not yet proxied" list above.
 
 ---
 
@@ -291,7 +357,7 @@ This app's data is owned by a separate backend service. The repo does **not** in
 1. Create `src/features/<Domain>/<Component>.tsx` etc.
 2. If you need a page, add `src/app/<route>/page.tsx` and update navigation.
 3. If the domain needs a Zustand store, create `src/zustand/store/<domain>.store.ts` + `provider/<domain>-store-provider.tsx`. Add an entry to this file.
-4. If the domain needs backend proxying, add route handlers under `src/app/api/<domain>/…`. Mirror the `getAccessToken()` + `axios` + `NextResponse.json` pattern from `src/app/api/accounts/route.ts`.
+4. If the domain needs backend proxying, add route handlers under `src/app/api/<domain>/…`. Mirror the `getAccessToken()` + `axios` + `NextResponse.json` pattern from `src/app/api/accounts/route.ts`. **Read the backend DTO first** (see [External backend reference](#external-backend-reference)) — the contract is the `class-validator` DTO, not a published spec. Be aware there is no URL versioning, so coordinate breaking changes with the backend before relying on a response shape.
 5. Add tests in `__tests__/features/<Domain>/` and `__tests__/app/api/<domain>/` as appropriate. Add a new mock fixture in `__tests__/mocks/<domain>.mock.ts` if the feature needs test data.
 6. Update this document. `CHANGELOG.md` is handled by CI — don't touch it.
 
@@ -342,10 +408,10 @@ This app's data is owned by a separate backend service. The repo does **not** in
 
 ## Open questions (for future maintainers)
 
-- The BFF error-handling pattern collapses every upstream failure into `400 { message }`. Should this be revisited to forward upstream status codes?
-- `BACKEND_URI` lacks a health-check route handler; if the backend is down, the failure surfaces in the UI as a generic 400.
-- The `/api/records` route uses POST for a read operation. Intentional (to send a complex payload), but worth a comment in code.
+- The BFF error-handling pattern collapses every upstream failure into `400 { message }` and discards the `GeneralResponse` envelope's `data` / `error` shape. Should this be revisited to forward upstream status codes and preserve `data`?
+- The backend has no health-check route. If it's down, every BFF call returns a generic 400 — consider adding a `/api/health` route handler that pings a cheap backend endpoint.
 - Why is `<html lang="es">` hardcoded in the root layout if the app is meant to be i18n-ready?
+- The dual-layer income/expense situation (legacy `/expenses-actions` + `/incomes-actions` controllers vs. the newer `AccountRecord` schema) is a long-standing inconsistency on the backend side. The BFF's `/api/records/{income,expense}` proxies currently hit the legacy controllers; confirm with the backend owner before refactoring.
 
 ---
 
