@@ -1,3 +1,9 @@
+## v0.16.0 (2026-06-25)
+
+### Pull Requests
+[#17](https://github.com/RafaelMoro/new-next-budget-master/pull/17) | Add income feature
+
+
 ## v0.15.0 (2026-06-25)
 
 ### Pull Requests
