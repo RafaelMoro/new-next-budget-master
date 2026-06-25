@@ -7,12 +7,13 @@ import { RiBankLine, RiCloseFill,
 import { Badge, Button, CheckIcon, Drawer, DrawerItems } from "flowbite-react";
 import clsx from "clsx"
 import { useRouter } from 'next/navigation'
+import { toast } from "sonner";
 
 import { BankMovement, TypeOfRecord } from "@/shared/types/records.types";
 import { categoryIcons } from "@/shared/constants/categories.constants";
 import { useMediaQuery } from "@/shared/hooks/useMediaQuery";
 import { ChartLineIcon } from "@/shared/ui/icons/ChartLineIcon"
-import { EDIT_EXPENSE_PAGE_ROUTE, EDIT_INCOME_PAGE_ROUTE, EDIT_TRANSFER_PAGE_ROUTE } from "@/shared/constants/global.constants";
+import { EDIT_EXPENSE_PAGE_ROUTE, EDIT_TRANSFER_PAGE_ROUTE } from "@/shared/constants/global.constants";
 import { useDashboard } from "@/shared/hooks/useDashboard";
 import { ExpensePaidList } from "./ExpensePaid/ExpensePaidList";
 import { IndebtedPeoplePreviewRecord } from "./IndebtedPeople/IndebtedPeoplePreviewRecord";
@@ -71,7 +72,7 @@ export const RecordsPreviewDrawer = ({ open, handleClose, record }: RecordsPrevi
   const handleEditRecord = async () => {
     await manageSelectedAccountCookie()
     if (record.typeOfRecord === 'income') {
-      router.push(EDIT_INCOME_PAGE_ROUTE)
+      toast.error("La edición de ingresos aún no está disponible.")
       return
     }
     if (record.typeOfRecord === 'transfer') {

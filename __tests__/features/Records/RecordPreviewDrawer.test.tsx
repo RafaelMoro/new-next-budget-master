@@ -9,6 +9,8 @@ import { DashboardStoreProvider } from '@/zustand/provider/dashboard-store-provi
 import { mockAccounts } from '../../mocks/accounts.mock';
 import { QueryProviderWrapper } from '@/app/QueryProviderWrapper';
 
+global.fetch = jest.fn().mockResolvedValue({ ok: true, json: jest.fn().mockResolvedValue({}) });
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
@@ -142,7 +144,7 @@ describe('RecordsPreviewDrawer', () => {
     expect(push).toHaveBeenCalledWith('/edit-record/edit-expense');
   });
 
-  it('should navigate to edit income route when editing an income record', async () => {
+  it('should not navigate to edit income route when editing an income record', async () => {
     const user = userEvent.setup();
     const push = jest.fn();
     render(<RecordsPreviewDrawerWrapper recordProp={editIncome} push={push} />);
@@ -153,7 +155,6 @@ describe('RecordsPreviewDrawer', () => {
     const editButton = screen.getByText('Editar');
     await user.click(editButton);
 
-    // Should navigate to edit income route since editIncome is an income record
-    expect(push).toHaveBeenCalledWith('/edit-record/edit-income');
+    expect(push).not.toHaveBeenCalled();
   });
 });
