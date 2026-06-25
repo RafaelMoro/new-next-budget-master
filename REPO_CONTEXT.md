@@ -85,6 +85,7 @@ Each subfolder contains a `route.ts` exporting HTTP method handlers (`GET`, `POS
 | `/api/records` | `POST` | `…/records/route.ts` | BFF proxy | POST is used to send `{ accountId, month, year }` and the handler issues a GET to `${BACKEND_URI}/records/get-expenses-and-incomes-by-month/{accountId}/{month}/{year}` — naming is "fetch" despite using POST |
 | `/api/records/income` | `POST`, `PUT`, `DELETE` | `…/records/income/route.ts` | BFF proxy | Create / edit / delete income record |
 | `/api/records/expense` | `POST` | `…/records/expense/route.ts` | BFF proxy | Create expense record |
+| `/api/records/transfer` | `POST` | `…/records/transfer/route.ts` | BFF proxy | Create transfer (forwards to `${BACKEND_URI}/records/transfer`) |
 | `/api/preferences/theme` | `POST` | `…/preferences/theme/route.ts` | **Cookie setter** | Saves the theme to a server cookie via `saveThemeCookie()` (no backend call) |
 | `/api/preferences/selected-account` | `POST` | `…/preferences/selected-account/route.ts` | **Cookie setter** | Saves the selected account to a server cookie via `savePreferenceCookie()` |
 | `/api/users/create-user` | `POST` | `…/users/create-user/route.ts` | BFF proxy | User registration |
@@ -317,7 +318,7 @@ No global prefix. Top-level backend paths: `/auth`, `/users`, `/account-actions`
 - `GET /categories`, `POST /categories`, `POST /categories/create-local-categories` (public, seeds defaults), `PUT /categories`, `DELETE /categories` — full CRUD + public seed
 - `GET /expenses-actions/:accountId/:month/:year`, `POST|PUT|DELETE /expenses-actions` — legacy expenses layer
 - `POST|PUT|DELETE /incomes-actions` — legacy incomes layer
-- `POST /records/transfer`, `GET /records/expenses-and-incomes/:accountId/:month/:year` — newer records layer (transfer + per-month aggregator)
+- `GET /records/expenses-and-incomes/:accountId/:month/:year` — newer records layer aggregator
 - `GET|POST|PUT|DELETE /budget-history`, `POST /budget-history/add-record`, `POST /budget-history/delete-record` — budget ledger
 
 The `Budget` and `Category` features in this repo's UI (and their mock fixtures under `__tests__/mocks/`) currently cannot talk to the backend until route handlers are added.
