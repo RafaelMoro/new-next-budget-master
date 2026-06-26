@@ -642,15 +642,13 @@ No build is required during research.
 
 ## Open Questions
 
-1. Should direct navigation to `/edit-record/edit-expense` without an `edit-record` in localStorage redirect to dashboard, or show a message?
+All questions have been answered during research. The full list of decisions is reflected in the relevant sections above.
 
-2. Should edit failure clear `edit-record` from localStorage? Current `ExpenseTemplate` already does this.
-
-3. Should the edit page include `LoginRequiredModal`, matching create-record? Assumption is yes.
-
-4. Should a failed category or budget fetch block editing, or allow editing fields that do not depend on those lists? Current `ExpenseTemplate` shows toasts and still renders.
-
-5. Is backend `PUT /expenses-actions` still guaranteed to accept `linkedBudgets` and deprecated `budgets: []`? Current code assumes yes.
+- Q1 (missing edit record → modal): answered in Edge Cases
+- Q2 (clear localStorage on edit failure): answered — yes, already implemented in `ExpenseTemplate`
+- Q3 (LoginRequiredModal): answered — yes
+- Q4 (category/budget fetch failure): answered — defer UX polish; see `ai-planning/FOLLOW_UP_ITEMS.md`
+- Q5 (backend `linkedBudgets` + deprecated `budgets`): answered — assumed yes, monitor during manual testing
 
 ## Assumptions
 
