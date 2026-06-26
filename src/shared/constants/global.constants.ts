@@ -20,6 +20,7 @@ export const RESET_PASSWORD_API_ENDPOINT = '/api/users/reset-password';
 export const ACCOUNT_API_ENDPOINT = 'api/accounts'
 export const EXPENSE_API_ENDPOINT = '/api/records/expense'
 export const INCOME_API_ENDPOINT = '/api/records/income'
+export const TRANSFER_API_ENDPOINT = '/api/records/transfer'
 export const RECORDS_API_ENDPOINT = '/api/records'
 export const SAVE_SELECTED_ACCOUNT_API_ENDPOINT = '/api/preferences/selected-account'
 

@@ -10,17 +10,18 @@ import { LinkButton } from "@/shared/ui/atoms/LinkButton"
 import { DASHBOARD_ROUTE } from "@/shared/constants/global.constants"
 import { ExpenseTemplate } from "./ExpenseTemplate/ExpenseTemplate";
 import { GetBudgetsResponse } from "@/shared/types/budgets.types"
-import { AccountsCookie } from "@/shared/types/accounts.types"
+import { AccountsCookie, GetAccountsResponse } from "@/shared/types/accounts.types"
 import { IncomeTemplate } from "./IncomeTemplate/IncomeTemplate"
-// import { TransferTemplate } from "./TransferTemplate"
+import { TransferTemplate } from "./TransferTemplate"
 
 interface TransactionManagerProps {
   resCategories: GetCategoriesResponse
   resBudgets: GetBudgetsResponse
+  resAccounts: GetAccountsResponse
   selectedAccount: AccountsCookie | null
 }
 
-export const TransactionManager = ({ resCategories, resBudgets, selectedAccount, }: TransactionManagerProps) => {
+export const TransactionManager = ({ resCategories, resBudgets, resAccounts, selectedAccount, }: TransactionManagerProps) => {
   const { categories, detailedError: errorCategories } = resCategories
   const { budgets, detailedError: errorBudgets } = resBudgets
   const [subscreen, setSubscreen] = useState<TransactionScreens>('expense')
@@ -69,16 +70,15 @@ export const TransactionManager = ({ resCategories, resBudgets, selectedAccount,
             editRecord={null}
           />
         )}
-        {/* { subscreen === 'transfer' && (
+        { subscreen === 'transfer' && (
           <TransferTemplate
             categories={categories}
             selectedAccount={selectedAccount}
-            accessToken={accessToken}
-            subscreen={subscreen}
+            resAccounts={resAccounts}
             detailedErrorCategories={errorCategories}
             editRecord={null}
           />
-        )} */}
+        )}
       </main>
     </div>
 

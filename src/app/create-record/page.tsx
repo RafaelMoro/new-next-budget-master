@@ -7,6 +7,7 @@ import { getAccountCookie } from "@/shared/lib/preferences.lib";
 import { LoginRequiredModal } from "@/shared/ui/organisms/LoginRequiredModal";
 import { CREATE_RECORD_META_DESCRIPTION, CREATE_RECORD_META_TITLE } from "@/shared/constants/metadata.constants";
 import { fetchAllBudgets } from "@/shared/lib/budgets.lib";
+import { fetchAccounts } from "@/shared/lib/dashboard.lib";
 
 export const metadata: Metadata = {
   title: CREATE_RECORD_META_TITLE,
@@ -18,12 +19,14 @@ export default async function CreateRecordPage() {
       accessToken,
       selectedAccountCookie,
       resCategories,
-      resBudgets
+      resBudgets,
+      resAccounts,
     ] = await Promise.all([
       getAccessToken(),
       getAccountCookie(),
       fetchCategories(),
-      fetchAllBudgets()
+      fetchAllBudgets(),
+      fetchAccounts(),
     ])
 
   return (
@@ -32,6 +35,7 @@ export default async function CreateRecordPage() {
       <TransactionManager
         resCategories={resCategories}
         resBudgets={resBudgets}
+        resAccounts={resAccounts}
         selectedAccount={selectedAccountCookie}
       />
     </>
