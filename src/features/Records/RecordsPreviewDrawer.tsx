@@ -13,7 +13,7 @@ import { BankMovement, TypeOfRecord } from "@/shared/types/records.types";
 import { categoryIcons } from "@/shared/constants/categories.constants";
 import { useMediaQuery } from "@/shared/hooks/useMediaQuery";
 import { ChartLineIcon } from "@/shared/ui/icons/ChartLineIcon"
-import { EDIT_EXPENSE_PAGE_ROUTE, EDIT_TRANSFER_PAGE_ROUTE } from "@/shared/constants/global.constants";
+import { EDIT_EXPENSE_PAGE_ROUTE } from "@/shared/constants/global.constants";
 import { useDashboard } from "@/shared/hooks/useDashboard";
 import { ExpensePaidList } from "./ExpensePaid/ExpensePaidList";
 import { IndebtedPeoplePreviewRecord } from "./IndebtedPeople/IndebtedPeoplePreviewRecord";
@@ -76,7 +76,7 @@ export const RecordsPreviewDrawer = ({ open, handleClose, record }: RecordsPrevi
       return
     }
     if (record.typeOfRecord === 'transfer') {
-      router.push(EDIT_TRANSFER_PAGE_ROUTE)
+      toast.error("La edición de transferencias aún no está disponible.")
       return
     }
     router.push(EDIT_EXPENSE_PAGE_ROUTE)

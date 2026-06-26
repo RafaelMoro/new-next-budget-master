@@ -8,6 +8,7 @@ import { AppRouterContextProviderMock } from '@/shared/ui/organisms/AppRouterCon
 import { DashboardStoreProvider } from '@/zustand/provider/dashboard-store-provider';
 import { mockAccounts } from '../../mocks/accounts.mock';
 import { QueryProviderWrapper } from '@/app/QueryProviderWrapper';
+import { Toaster } from 'sonner';
 
 global.fetch = jest.fn().mockResolvedValue({ ok: true, json: jest.fn().mockResolvedValue({}) });
 
@@ -37,6 +38,7 @@ const RecordsPreviewDrawerWrapper = ({ push, recordProp = recordMock  }: { push:
     <DashboardStoreProvider accounts={mockAccounts} records={[]} selectedAccountId={mockAccounts[0]._id}>
       <div>
         <button onClick={() => handleOpenRecordPreviewDrawer(recordProp)}>Open Drawer</button>
+        <Toaster position="top-center" />
         <QueryProviderWrapper>
           <AppRouterContextProviderMock router={{ push }}>
             <RecordsPreviewDrawer
@@ -52,6 +54,15 @@ const RecordsPreviewDrawerWrapper = ({ push, recordProp = recordMock  }: { push:
 };
 
 describe('RecordsPreviewDrawer', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
   it('should render the drawer with record details when open', async () => {
     const user = userEvent.setup();
     const push = jest.fn();
@@ -156,5 +167,20 @@ describe('RecordsPreviewDrawer', () => {
     await user.click(editButton);
 
     expect(push).not.toHaveBeenCalled();
+  });
+
+  it('should not navigate when editing a transfer record and should show the unavailable toast', async () => {
+    const user = userEvent.setup();
+    const push = jest.fn();
+    render(<RecordsPreviewDrawerWrapper recordProp={transferRecordMock} push={push} />);
+
+    const openButton = screen.getByText('Open Drawer');
+    await user.click(openButton);
+
+    const editButton = screen.getByText('Editar');
+    await user.click(editButton);
+
+    expect(push).not.toHaveBeenCalled();
+    expect(await screen.findByText('La edición de transferencias aún no está disponible.')).toBeInTheDocument();
   });
 });
