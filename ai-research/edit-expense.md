@@ -576,13 +576,9 @@ If implementation or manual testing shows a backend DTO mismatch, use the backen
 
 Direct navigation to `/edit-record/edit-expense` can happen without localStorage.
 
-Current old pattern simply renders with `editRecord` null, causing the reused form to behave like create mode while the page says edit.
+Decision: show a blocking modal — the same `LoginRequiredModal` pattern used on the dashboard and create-record pages — rather than silently redirecting to dashboard. The modal should display when no `edit-record` is found in localStorage, telling the user they must select a record from the drawer to edit it.
 
-This is confusing.
-
-Open decision: redirect to dashboard when no `edit-record` exists, or render a lightweight fallback.
-
-Lazy default: redirect to dashboard because the feature depends on choosing a record from the drawer.
+This means `EditExpense` reads localStorage, finds no `edit-record`, and renders `LoginRequiredModal` with a message tailored to this case instead of the auth-expired copy. Alternatively, a dedicated `RecordRequiredModal` can be created in `src/shared/ui/organisms/` if the message diverges enough from `LoginRequiredModal` — lazy default is reusing the existing modal with a prop or a shared wrapper if both cases are similar enough to justify it.
 
 #### Selected Account Missing
 
